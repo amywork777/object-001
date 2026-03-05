@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OBJECT 001 — Status</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --border: #222222;
+      --accent: #7c5cfc;
+      --accent2: #a78bfa;
+      --green: #22c55e;
+      --yellow: #eab308;
+      --red: #ef4444;
+      --text: #f0f0f0;
+      --muted: #666666;
+      --muted2: #444444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: var(--accent2);
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+    }
+
+    .main { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .card-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* Progress */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      position: relative;
+    }
+
+    .step-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 28px;
+      bottom: -8px;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .step-item.active::after { background: var(--accent); }
+    .step-item.done::after { background: var(--green); opacity: 0.4; }
+
+    .step-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      z-index: 1;
+    }
+
+    .step-item.done .step-icon {
+      background: var(--green);
+      border-color: var(--green);
+      color: #000;
+    }
+
+    .step-item.active .step-icon {
+      background: var(--accent);
+      border-color: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    .step-body {
+      padding: 2px 0 20px 0;
+      flex: 1;
+    }
+
+    .step-name {
+      font-weight: 600;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step-item.active .step-name { color: var(--accent2); }
+    .step-item.pending .step-name { color: var(--muted2); }
+
+    .step-tag {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .tag-active { background: rgba(124, 92, 252, 0.2); color: var(--accent2); }
+    .tag-done { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .tag-pending { background: var(--surface2); color: var(--muted); }
+
+    .step-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Artifacts */
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .artifact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      padding: 8px 10px;
+      background: var(--surface2);
+      border-radius: 8px;
+    }
+
+    .artifact-icon { font-size: 14px; }
+    .artifact-name { color: var(--muted); flex: 1; }
+    .artifact-item.done .artifact-name { color: var(--text); }
+
+    /* Designs */
+    .design-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .design-thumb {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--surface2);
+      position: relative;
+    }
+
+    .design-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .design-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted2);
+      font-size: 11px;
+      text-align: center;
+      padding: 16px;
+      height: 80px;
+    }
+
+    /* Ledger */
+    .ledger-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ledger-item {
+      padding: 10px 12px;
+      background: var(--surface2);
+      border-radius: 8px;
+      border-left: 2px solid var(--accent);
+    }
+
+    .ledger-summary { font-size: 12px; margin-bottom: 3px; }
+    .ledger-meta { font-size: 11px; color: var(--muted); }
+
+    /* Budget */
+    .budget-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .budget-row:last-child { border-bottom: none; }
+    .budget-label { color: var(--muted); }
+    .budget-value { font-weight: 600; }
+    .budget-value.highlight { color: var(--accent2); }
+
+    /* Approval */
+    .approval-box {
+      background: rgba(124, 92, 252, 0.08);
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .approval-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .approval-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .btn-row { display: flex; gap: 10px; justify-content: center; }
+
+    .btn {
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+    .btn-approve { background: var(--green); color: #000; }
+    .btn-deny { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+
+    /* Misc */
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 24px 0;
+    }
+
+    .loading { color: var(--muted); font-size: 12px; }
+
+    .refresh-time {
+      font-size: 11px;
+      color: var(--muted2);
+      text-align: right;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 800px) {
+      .container { grid-template-columns: 1fr; padding: 16px; }
+      header { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">OBJECT <span>001</span></div>
+  <div class="status-badge">
+    <div class="dot" id="live-dot"></div>
+    <span id="status-text">Loading...</span>
+  </div>
+</header>
+
+<div class="container">
+  <div class="main">
+
+    <!-- Pipeline Progress -->
+    <div class="card">
+      <div class="card-title">Pipeline</div>
+      <div class="step-list" id="step-list">
+        <div class="loading">Loading state...</div>
+      </div>
+    </div>
+
+    <!-- Design Renders -->
+    <div class="card">
+      <div class="card-title">Design Renders</div>
+      <div id="design-section">
+        <div class="design-empty">No designs yet — starts at design_explore step</div>
+      </div>
+    </div>
+
+    <!-- Decision Log -->
+    <div class="card">
+      <div class="card-title">Decision Log</div>
+      <div id="ledger-section">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sidebar">
+
+    <!-- Artifacts -->
+    <div class="card">
+      <div class="card-title">Artifacts</div>
+      <div class="artifact-grid" id="artifact-grid">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+
+    <!-- Budget -->
+    <div class="card">
+      <div class="card-title">Budget</div>
+      <div id="budget-section">
+        <div class="budget-row">
+          <span class="budget-label">Target budget</span>
+          <span class="budget-value">$1,000–5,000</span>
+        </div>
+        <div class="budget-row">
+          <span class="budget-label">Target units</span>
+          <span class="budget-value">10–20</span>
+        </div>
+        <div class="budget-row">
+          <span class="budget-label">Quotes received</span>
+          <span class="budget-value" id="quotes-count">0</span>
+        </div>
+        <div class="budget-row">
+          <span class="budget-label">Spend proposed</span>
+          <span class="budget-value highlight" id="spend-proposed">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Approval (shown only at human_approval step) -->
+    <div id="approval-card" style="display:none">
+      <div class="approval-box">
+        <div class="approval-title">⚡ Approval Required</div>
+        <div class="approval-desc" id="approval-desc">Review the spend proposal and approve to proceed to manufacturing.</div>
+        <div class="btn-row">
+          <button class="btn btn-approve" onclick="handleApprove()">Approve</button>
+          <button class="btn btn-deny" onclick="handleDeny()">Deny</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="refresh-time" id="refresh-time"></div>
+  </div>
+</div>
+
+<script>
+const REPO = 'amywork777/object-001';
+const BRANCH = 'main';
+const RAW = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
+
+const STEPS = [
+  { id: 'market_research',   label: 'Market Research',    desc: 'Competitive analysis, opportunity sizing' },
+  { id: 'product_decision',  label: 'Product Decision',   desc: 'Choose the product direction' },
+  { id: 'design_explore',    label: 'Design Explore',     desc: 'Generate 4 design directions in Vizcom' },
+  { id: 'design_refine',     label: 'Design Refine',      desc: 'Iterate on top designs' },
+  { id: 'design_final',      label: 'Final Design',       desc: 'Hero renders + production reference' },
+  { id: 'engineering',       label: 'Engineering',        desc: 'BOM, specs, tolerances' },
+  { id: 'find_manufacturers',label: 'Find Manufacturers', desc: 'RFQ outreach + quotes' },
+  { id: 'human_approval',    label: 'Human Approval',     desc: 'Review and approve spend' },
+  { id: 'manufacture',       label: 'Manufacture',        desc: 'Production underway' },
+  { id: 'ship_launch',       label: 'Ship & Launch',      desc: 'Fulfillment and release' },
+];
+
+const ARTIFACT_LABELS = {
+  researchReport:     { label: 'Research Report', icon: '📊' },
+  productDecision:    { label: 'Product Decision', icon: '🎯' },
+  designScores:       { label: 'Design Scores', icon: '🎨' },
+  selectedDesign:     { label: 'Selected Design', icon: '✅' },
+  engineeringSpec:    { label: 'Engineering Spec', icon: '⚙️' },
+  bom:                { label: 'Bill of Materials', icon: '📋' },
+  manufacturerQuotes: { label: 'Manufacturer Quotes', icon: '💰' },
+  spendProposal:      { label: 'Spend Proposal', icon: '📝' },
+};
+
+async function fetchJSON(path) {
+  const r = await fetch(`${RAW}/${path}?_=${Date.now()}`);
+  if (!r.ok) throw new Error(`${r.status} ${path}`);
+  return r.json();
+}
+
+function stepIndex(id) {
+  return STEPS.findIndex(s => s.id === id);
+}
+
+function renderSteps(currentStep) {
+  const currentIdx = stepIndex(currentStep);
+  return STEPS.map((step, i) => {
+    let cls = 'pending', tagCls = 'tag-pending', tagLabel = '';
+    if (i < currentIdx) { cls = 'done'; tagCls = 'tag-done'; tagLabel = '✓'; }
+    else if (i === currentIdx) { cls = 'active'; tagCls = 'tag-active'; tagLabel = 'In Progress'; }
+    return `
+      <div class="step-item ${cls}">
+        <div class="step-icon">${i < currentIdx ? '✓' : i + 1}</div>
+        <div class="step-body">
+          <div class="step-name">
+            ${step.label}
+            ${tagLabel ? `<span class="step-tag ${tagCls}">${tagLabel}</span>` : ''}
+          </div>
+          <div class="step-desc">${step.desc}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderArtifacts(artifacts) {
+  return Object.entries(ARTIFACT_LABELS).map(([key, { label, icon }]) => {
+    const val = artifacts[key];
+    const done = val === true || (val !== null && val !== false && val !== undefined);
+    return `
+      <div class="artifact-item ${done ? 'done' : ''}">
+        <span class="artifact-icon">${icon}</span>
+        <span class="artifact-name">${label}</span>
+        ${done ? '<span>✓</span>' : ''}
+      </div>`;
+  }).join('');
+}
+
+function renderLedger(entries) {
+  if (!entries.length) return '<div class="empty-state">No decisions logged yet</div>';
+  return `<div class="ledger-list">${
+    [...entries].reverse().slice(0, 8).map(e => `
+      <div class="ledger-item">
+        <div class="ledger-summary">${e.summary}</div>
+        <div class="ledger-meta">${e.step} · ${new Date(e.timestamp).toLocaleString()}</div>
+      </div>`).join('')
+  }</div>`;
+}
+
+function renderDesigns(drawings) {
+  if (!drawings.length) return '<div class="design-empty">No designs yet — starts at design_explore step</div>';
+  return `<div class="design-grid">${
+    drawings.map(d => `
+      <div class="design-thumb">
+        <img src="${d.thumbnailPath}" alt="${d.name}" loading="lazy"
+             onerror="this.style.display='none'" />
+      </div>`).join('')
+  }</div>`;
+}
+
+async function refresh() {
+  try {
+    const [project, ledger, vizcom] = await Promise.all([
+      fetchJSON('state/project.json'),
+      fetchJSON('state/ledger.json'),
+      fetchJSON('state/vizcom.json').catch(() => ({ drawings: [] })),
+    ]);
+
+    // Steps
+    document.getElementById('step-list').innerHTML = renderSteps(project.currentStep);
+
+    // Artifacts
+    document.getElementById('artifact-grid').innerHTML = renderArtifacts(project.artifacts);
+
+    // Ledger
+    document.getElementById('ledger-section').innerHTML = renderLedger(ledger);
+
+    // Designs
+    document.getElementById('design-section').innerHTML = renderDesigns(vizcom.drawings || []);
+
+    // Budget
+    document.getElementById('quotes-count').textContent =
+      (project.artifacts.manufacturerQuotes ? 'Received' : '0');
+    document.getElementById('spend-proposed').textContent =
+      project.artifacts.spendProposal ? 'Pending review' : '—';
+
+    // Approval card
+    const approvalCard = document.getElementById('approval-card');
+    approvalCard.style.display = project.currentStep === 'human_approval' ? 'block' : 'none';
+
+    // Header
+    document.getElementById('status-text').textContent =
+      `Step ${stepIndex(project.currentStep) + 1}/10 · ${project.currentStep.replace(/_/g, ' ')}`;
+
+    document.getElementById('refresh-time').textContent =
+      `Last updated ${new Date().toLocaleTimeString()}`;
+
+  } catch (e) {
+    console.error(e);
+    document.getElementById('status-text').textContent = 'Error loading state';
+  }
+}
+
+function handleApprove() {
+  alert('To approve: message the agent with /object-001 approve');
+}
+
+function handleDeny() {
+  const reason = prompt('Reason for denial:');
+  if (reason) alert(`To deny: message the agent with /object-001 deny ${reason}`);
+}
+
+// Initial load + auto-refresh every 30s
+refresh();
+setInterval(refresh, 30000);
+</script>
+</body>
+</html>
