@@ -512,6 +512,28 @@
       </div>
     </div>
 
+    <!-- Error Memory -->
+    <div class="section" id="sec-errors">
+      <div class="section-header" onclick="toggle('sec-errors')">
+        <div class="section-header-left">
+          <span class="section-icon">🧠</span>
+          <div>
+            <div class="section-title">Error Memory</div>
+            <div class="section-subtitle">Logged mistakes — agent reads this before every step</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="section-badge badge-count" id="errors-count">0 entries</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div id="errors-list"><div style="color:var(--muted);font-size:12px">Loading...</div></div>
+        </div>
+      </div>
+    </div>
+
     <!-- State Files -->
     <div class="section" id="sec-files">
       <div class="section-header" onclick="toggle('sec-files')">
@@ -529,6 +551,14 @@
       <div class="section-body">
         <div class="section-inner">
           <div class="file-list">
+            <a class="file-item" href="https://github.com/amywork777/object-001/blob/main/state/errors.json" target="_blank">
+              <span class="file-icon">🧠</span>
+              <div class="file-info">
+                <div class="file-name">errors.json</div>
+                <div class="file-desc">Logged mistakes and fixes — agent reads before every step</div>
+              </div>
+              <span class="file-arrow">↗</span>
+            </a>
             <a class="file-item" href="https://github.com/amywork777/object-001/blob/main/state/project.json" target="_blank">
               <span class="file-icon">⚙️</span>
               <div class="file-info">
@@ -791,10 +821,11 @@ function closeLightbox() {
 
 async function refresh() {
   try {
-    const [project, ledger, vizcom] = await Promise.all([
+    const [project, ledger, vizcom, errors] = await Promise.all([
       fetchJSON('state/project.json'),
       fetchJSON('state/ledger.json'),
       fetchJSON('state/vizcom.json').catch(() => ({ drawings: [] })),
+      fetchJSON('state/errors.json').catch(() => []),
     ]);
 
     const ci = stepIndex(project.currentStep);
@@ -842,6 +873,10 @@ async function refresh() {
     document.getElementById('approval-card').style.display =
       project.currentStep === 'human_approval' ? 'block' : 'none';
 
+    // Errors
+    document.getElementById('errors-count').textContent = `${errors.length} entries`;
+    document.getElementById('errors-list').innerHTML = renderErrors(errors);
+
     document.getElementById('update-time').textContent =
       `Updated ${new Date().toLocaleTimeString()}`;
 
@@ -849,6 +884,33 @@ async function refresh() {
     console.error(e);
     document.getElementById('status-text').textContent = 'Error loading state';
   }
+}
+
+function renderErrors(errors) {
+  if (!errors.length) return `
+    <div style="text-align:center;padding:24px 0;color:var(--muted);font-size:12px">
+      ✅ No mistakes logged yet.<br>
+      <span style="color:var(--muted2)">Use <code style="background:var(--surface2);padding:1px 5px;border-radius:3px">/object-001 note &lt;mistake&gt;</code> to flag something.</span>
+    </div>`;
+  const TYPE_COLORS = {
+    agent_error:       'var(--red)',
+    human_correction:  'var(--yellow)',
+    api_failure:       'var(--accent2)',
+    bad_output:        'var(--yellow)',
+  };
+  return `<div class="ledger-list">${
+    [...errors].reverse().map(e => `
+      <div class="ledger-item" style="border-left-color:${TYPE_COLORS[e.type]||'var(--red)'}">
+        <div class="ledger-summary">⚠️ ${e.summary}</div>
+        <div class="ledger-meta">
+          <span>Step: ${e.step}</span>
+          <span>Type: ${e.type}</span>
+          <span>${new Date(e.timestamp).toLocaleString()}</span>
+          ${e.resolved ? '<span style="color:var(--green)">✓ Resolved</span>' : '<span style="color:var(--red)">Open</span>'}
+        </div>
+        ${e.root_cause ? `<div class="ledger-details"><b>Root cause:</b> ${e.root_cause}\n<b>Fix:</b> ${e.fix}</div>` : ''}
+      </div>`).join('')
+  }</div>`;
 }
 
 function handleApprove() { alert('Send the agent: /object-001 approve'); }

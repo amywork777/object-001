@@ -15,7 +15,42 @@ When the user invokes this skill, manage the OBJECT 001 project.
 - `/object-001 approve` — Approve the spend proposal
 - `/object-001 deny <reason>` — Deny the spend proposal
 - `/object-001 ledger` — Show the decision log
+- `/object-001 note <mistake>` — Log a mistake or correction so it's never repeated
+- `/object-001 errors` — Show the error/mistake log
 - `/object-001 reset` — Reset project state (requires confirmation)
+
+## Error Memory — Read This First
+
+**Before every single action**, read `{baseDir}/../../state/errors.json`.
+
+This file contains logged mistakes, failed approaches, and corrections from past runs.
+If an error entry is relevant to what you're about to do — **change your approach**.
+Never repeat a logged mistake.
+
+Example: if errors.json says "Vizcom login fails with expired token after 1h — re-authenticate before each step",
+then always re-authenticate fresh at the start of each step, don't reuse a token.
+
+### Logging Errors
+
+Whenever something fails, gets retried, or a human flags a mistake with `/object-001 note`,
+append to `{baseDir}/../../state/errors.json`:
+
+```json
+{
+  "id": "uuid",
+  "timestamp": "2026-03-05T21:00:00Z",
+  "step": "design_explore",
+  "type": "agent_error | human_correction | api_failure | bad_output",
+  "summary": "One-line description of what went wrong",
+  "root_cause": "Why it happened",
+  "fix": "What to do differently next time",
+  "resolved": true
+}
+```
+
+Always include `fix` — the whole point is to not repeat it.
+
+---
 
 ## State Management
 
