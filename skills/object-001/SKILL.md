@@ -134,8 +134,8 @@ Then create the workbench:
 ```graphql
 mutation {
   createWorkbench(input: {
-    folderId: "<rootFolderId>"
-    name: "OBJECT 001"
+    workbench: { name: "OBJECT 001", folderId: "<rootFolderId>" }
+    startInStudio: false
   }) {
     workbench { id name }
   }
@@ -143,6 +143,10 @@ mutation {
 ```
 
 Save the workbench ID to `{baseDir}/../../state/vizcom.json`.
+
+**Note:** The workbench for this project has already been created:
+- ID: `8bffd0a2-c2a8-4b22-9271-85bc87b74ea6`
+- Only create a new one if this ID stops working.
 
 ### Step 3: Run the agentic chat bar
 

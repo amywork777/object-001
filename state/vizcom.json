@@ -1,7 +1,7 @@
 {
   "endpoint": "https://pr-5256.dev.vizcom.com/api/v1/graphql",
-  "workbenchId": null,
+  "workbenchId": "8bffd0a2-c2a8-4b22-9271-85bc87b74ea6",
   "workbenchName": "OBJECT 001",
-  "createdAt": null,
+  "createdAt": "2026-03-05T21:56:00Z",
   "drawings": []
 }
