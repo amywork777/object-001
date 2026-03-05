@@ -1,43 +1,15 @@
 [
   {
     "id": "00000000-0000-0000-0000-000000000001",
-    "timestamp": "2026-03-04T00:00:00Z",
-    "type": "decision",
+    "timestamp": "2026-03-05T22:07:26Z",
+    "type": "initialization",
     "step": "initialization",
-    "summary": "OBJECT 001 project initialized",
+    "summary": "Project restarted with clean state. Accurate timing and logging begins now.",
     "details": {
-      "agent": "openclaw",
+      "reason": "Previous ledger entries contained fabricated timestamps. Wiped for integrity.",
       "targetUnits": "10-20",
-      "budgetRange": "$1,000-5,000"
-    }
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000000002",
-    "timestamp": "2026-03-05T22:00:00Z",
-    "type": "decision",
-    "step": "market_research",
-    "summary": "Market research complete — identified collectible retro handheld as optimal niche",
-    "details": {
-      "marketsAnalyzed": ["mass market", "retro emulation", "premium/niche"],
-      "keyInsight": "Oversaturated at budget end, underserved at premium/collectible tier",
-      "comparables": ["Analogue Pocket ($219, sells out instantly)", "Playdate ($199, 100k units)", "Miyoo Mini (sells out on every restock)"],
-      "recommendation": "Minimal collectible retro handheld, design-first, numbered limited run"
-    }
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000000003",
-    "timestamp": "2026-03-05T22:00:00Z",
-    "type": "decision",
-    "step": "product_decision",
-    "summary": "Product decided: Game Boy Micro-sized collectible retro handheld, 10-20 numbered units, AI-designed",
-    "details": {
-      "formFactor": "Game Boy Micro-sized, pocket-first",
-      "screen": "2.8\" IPS 640x480 4:3",
-      "soc": "Rockchip RK3566 class",
-      "shell": "CNC aluminum top + polycarbonate bottom",
-      "os": "MuOS / open-source retro emulation",
-      "differentiator": "AI-designed, numbered, ships with design lineage card",
-      "notCompeting": "Not a Steam Deck competitor — a design statement and art object"
+      "budgetRange": "$1,000-5,000",
+      "trackingStarted": "2026-03-05T22:07:26Z"
     }
   }
 ]
