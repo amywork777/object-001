@@ -6,10 +6,62 @@
     "step": "initialization",
     "summary": "Project restarted with clean state. Accurate timing and logging begins now.",
     "details": {
-      "reason": "Previous ledger entries contained fabricated timestamps. Wiped for integrity.",
+      "reason": "Previous entries had fabricated timestamps. Wiped for integrity.",
       "targetUnits": "10-20",
-      "budgetRange": "$1,000-5,000",
-      "trackingStarted": "2026-03-05T22:07:26Z"
+      "budgetRange": "$1,000-5,000"
+    }
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000002",
+    "timestamp": "2026-03-05T22:11:26Z",
+    "type": "step_start",
+    "step": "market_research",
+    "summary": "Market research started",
+    "details": {}
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000003",
+    "timestamp": "2026-03-05T22:12:33Z",
+    "type": "step_complete",
+    "step": "market_research",
+    "summary": "Market research complete. Live sources: analogue.co, play.date, anbernic.com.",
+    "details": {
+      "sources": ["analogue.co/pocket", "play.date", "anbernic.com"],
+      "keyFinding": "Anbernic owns specs race. Analogue ($219) and Playdate ($199) prove design-first audience pays. Gap: numbered collectible with strong identity.",
+      "recommendation": "Limited run collectible — compete on story, craft, rarity"
+    }
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000004",
+    "timestamp": "2026-03-05T22:12:33Z",
+    "type": "step_start",
+    "step": "product_decision",
+    "summary": "Product decision started",
+    "details": {}
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000005",
+    "timestamp": "2026-03-05T22:13:16Z",
+    "type": "step_complete",
+    "step": "product_decision",
+    "summary": "Product decided: pocket-sized collectible retro handheld, 10-20 numbered units, AI-designed.",
+    "details": {
+      "formFactor": "Pocket-sized, 4:3 IPS ~2.8\"",
+      "shell": "CNC aluminum or high-grade polycarbonate, matte",
+      "soc": "Rockchip RK3566 class",
+      "os": "MuOS open-source",
+      "units": "10-20, numbered 01/20 to 20/20",
+      "differentiator": "AI-designed origin story, ships with design lineage card"
+    }
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000006",
+    "timestamp": "2026-03-05T22:13:16Z",
+    "type": "step_start",
+    "step": "design_explore",
+    "summary": "Design exploration started — sending prompt to Vizcom",
+    "details": {
+      "workbenchId": "8bffd0a2-c2a8-4b22-9271-85bc87b74ea6"
     }
   }
 ]
