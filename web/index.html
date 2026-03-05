@@ -891,6 +891,9 @@ async function refresh() {
     if (project.createdAt) {
       projectStartTime = new Date(project.createdAt).getTime();
       updateTimer();
+    } else {
+      projectStartTime = null;
+      document.getElementById('timer-value').textContent = 'NOT STARTED';
     }
 
     const ci = stepIndex(project.currentStep);
