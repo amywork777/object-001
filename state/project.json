@@ -36,7 +36,12 @@
     "spendProposal": false,
     "approvalStatus": null
   },
-  "stepTimings": {},
-  "createdAt": null,
-  "lastUpdated": "2026-03-05T22:09:00Z"
+  "stepTimings": {
+    "market_research": {
+      "startedAt": "2026-03-05T22:11:26Z",
+      "completedAt": null
+    }
+  },
+  "createdAt": "2026-03-05T22:11:26Z",
+  "lastUpdated": "2026-03-05T22:11:26Z"
 }
