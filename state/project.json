@@ -36,6 +36,23 @@
     "spendProposal": false,
     "approvalStatus": null
   },
+  "stepTimings": {
+    "market_research": {
+      "startedAt": "2026-03-05T21:58:00Z",
+      "completedAt": "2026-03-05T22:00:00Z",
+      "durationMs": 120000
+    },
+    "product_decision": {
+      "startedAt": "2026-03-05T22:00:00Z",
+      "completedAt": "2026-03-05T22:00:30Z",
+      "durationMs": 30000
+    },
+    "design_explore": {
+      "startedAt": "2026-03-05T22:01:00Z",
+      "completedAt": null,
+      "durationMs": null
+    }
+  },
   "createdAt": "2026-03-04T00:00:00Z",
-  "lastUpdated": "2026-03-05T22:00:00Z"
+  "lastUpdated": "2026-03-05T22:01:00Z"
 }

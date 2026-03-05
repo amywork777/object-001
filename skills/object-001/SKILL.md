@@ -67,6 +67,34 @@ After completing work, update `project.json` to reflect:
 - Iteration count changes
 - Artifact completion flags
 
+### Step Timing — Always Record
+
+Every step must record its timing in `project.json` under `stepTimings`:
+
+**When starting a step**, set:
+```json
+"stepTimings": {
+  "<stepId>": {
+    "startedAt": "<ISO timestamp>",
+    "completedAt": null,
+    "durationMs": null
+  }
+}
+```
+
+**When completing a step**, fill in:
+```json
+"stepTimings": {
+  "<stepId>": {
+    "startedAt": "<when it started>",
+    "completedAt": "<ISO timestamp now>",
+    "durationMs": <completedAt ms - startedAt ms>
+  }
+}
+```
+
+This is how the dashboard shows per-step timing. Do not skip this.
+
 ### Logging Decisions
 
 Append every decision to `{baseDir}/../../state/ledger.json` (array of entries):

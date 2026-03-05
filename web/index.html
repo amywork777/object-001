@@ -240,6 +240,19 @@
 
     .step-desc { font-size:12px; color:var(--muted); margin-top:2px; }
 
+    .step-timing {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-variant-numeric: tabular-nums;
+      margin-top: 4px;
+      color: var(--muted);
+    }
+    .step-timing.live { color: var(--accent2); }
+    .step-timing.done { color: var(--green); opacity: 0.7; }
+
     /* Design Grid */
     .design-grid {
       display: grid;
@@ -761,18 +774,34 @@ async function fetchJSON(path) {
   return r.json();
 }
 
-function renderSteps(currentStep) {
+function renderSteps(currentStep, stepTimings) {
   const ci = stepIndex(currentStep);
   return STEPS.map((step, i) => {
-    let cls = 'pending', tag = '';
-    if (i < ci)  { cls = 'done';   tag = `<span class="step-tag tag-done">✓ Done</span>`; }
-    if (i === ci){ cls = 'active'; tag = `<span class="step-tag tag-active">▶ In Progress</span>`; }
+    let cls = 'pending', tag = '', timingHtml = '';
+    const t = stepTimings && stepTimings[step.id];
+
+    if (i < ci) {
+      cls = 'done';
+      tag = `<span class="step-tag tag-done">✓ Done</span>`;
+      if (t && t.durationMs != null) {
+        timingHtml = `<div class="step-timing done">✓ ${formatDuration(t.durationMs)}</div>`;
+      }
+    } else if (i === ci) {
+      cls = 'active';
+      tag = `<span class="step-tag tag-active">▶ In Progress</span>`;
+      timingHtml = `<div class="step-timing live" id="live-step-timer">⏱ --:--</div>`;
+      if (t && t.startedAt) {
+        currentStepStartTime = new Date(t.startedAt).getTime();
+      }
+    }
+
     return `
       <div class="step-item ${cls}">
         <div class="step-icon">${i < ci ? '✓' : i+1}</div>
         <div class="step-body">
           <div class="step-name">${step.label} ${tag}</div>
           <div class="step-desc">${step.desc}</div>
+          ${timingHtml}
         </div>
       </div>`;
   }).join('');
@@ -877,7 +906,8 @@ async function refresh() {
     document.getElementById('pipeline-badge').textContent =
       STEPS[ci]?.label || project.currentStep;
     document.getElementById('progress-fill').style.width = pct + '%';
-    document.getElementById('step-list').innerHTML = renderSteps(project.currentStep);
+    currentStepStartTime = null;
+    document.getElementById('step-list').innerHTML = renderSteps(project.currentStep, project.stepTimings || {});
 
     // Artifacts
     document.getElementById('artifact-list').innerHTML = renderArtifacts(project.artifacts);
@@ -957,20 +987,31 @@ function handleDeny()    {
 
 // Timer
 let projectStartTime = null;
+let currentStepStartTime = null;
+const pad = n => String(n).padStart(2, '0');
 
-function updateTimer() {
-  if (!projectStartTime) return;
-  const elapsed = Date.now() - projectStartTime;
-  const totalSecs = Math.floor(elapsed / 1000);
+function formatDuration(ms) {
+  if (!ms && ms !== 0) return null;
+  const totalSecs = Math.floor(ms / 1000);
   const days  = Math.floor(totalSecs / 86400);
   const hours = Math.floor((totalSecs % 86400) / 3600);
   const mins  = Math.floor((totalSecs % 3600) / 60);
   const secs  = totalSecs % 60;
-  const pad   = n => String(n).padStart(2, '0');
-  document.getElementById('timer-value').textContent =
-    days > 0
-      ? `${days}d ${pad(hours)}:${pad(mins)}:${pad(secs)}`
-      : `${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+  if (days > 0) return `${days}d ${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+  if (hours > 0) return `${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+  return `${pad(mins)}:${pad(secs)}`;
+}
+
+function updateTimer() {
+  if (projectStartTime) {
+    const v = document.getElementById('timer-value');
+    if (v) v.textContent = formatDuration(Date.now() - projectStartTime) || '--:--';
+  }
+  // Update live step timer
+  if (currentStepStartTime) {
+    const el = document.getElementById('live-step-timer');
+    if (el) el.textContent = '⏱ ' + (formatDuration(Date.now() - currentStepStartTime) || '00:00');
+  }
 }
 
 setInterval(updateTimer, 1000);
