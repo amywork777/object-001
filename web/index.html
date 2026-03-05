@@ -9,14 +9,16 @@
       --bg: #0a0a0a;
       --surface: #111111;
       --surface2: #1a1a1a;
+      --surface3: #222222;
       --border: #222222;
+      --border2: #2a2a2a;
       --accent: #7c5cfc;
       --accent2: #a78bfa;
       --green: #22c55e;
       --yellow: #eab308;
       --red: #ef4444;
       --text: #f0f0f0;
-      --muted: #666666;
+      --muted: #777777;
       --muted2: #444444;
     }
 
@@ -33,22 +35,26 @@
 
     header {
       border-bottom: 1px solid var(--border);
-      padding: 20px 32px;
+      padding: 18px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
     }
 
     .logo {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
+    .logo span { color: var(--accent2); }
 
-    .logo span {
-      color: var(--accent2);
-    }
+    .header-right { display: flex; align-items: center; gap: 16px; }
 
     .status-badge {
       display: flex;
@@ -59,52 +65,106 @@
     }
 
     .dot {
-      width: 8px;
-      height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--green);
       animation: pulse 2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .refresh-btn {
+      background: none;
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
     }
+    .refresh-btn:hover { border-color: var(--accent2); color: var(--accent2); }
 
     .container {
-      max-width: 1100px;
+      max-width: 1140px;
       margin: 0 auto;
-      padding: 32px;
+      padding: 28px 32px;
       display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 24px;
+      grid-template-columns: 1fr 320px;
+      gap: 20px;
     }
 
-    .main { display: flex; flex-direction: column; gap: 24px; }
-    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .main { display: flex; flex-direction: column; gap: 16px; }
+    .sidebar { display: flex; flex-direction: column; gap: 16px; }
 
-    .card {
+    /* Expandable Section */
+    .section {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 24px;
+      overflow: hidden;
     }
 
-    .card-title {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-
-    /* Progress */
-    .step-list {
+    .section-header {
       display: flex;
-      flex-direction: column;
-      gap: 0;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
     }
+    .section-header:hover { background: var(--surface2); }
+
+    .section-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-icon { font-size: 16px; }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .section-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .section-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .badge-active { background: rgba(124,92,252,0.2); color: var(--accent2); }
+    .badge-done   { background: rgba(34,197,94,0.15); color: var(--green); }
+    .badge-pending{ background: var(--surface2); color: var(--muted); }
+    .badge-count  { background: var(--surface2); color: var(--muted); }
+
+    .chevron {
+      color: var(--muted2);
+      font-size: 12px;
+      transition: transform 0.2s;
+    }
+    .section.open .chevron { transform: rotate(180deg); }
+
+    .section-body {
+      display: none;
+      border-top: 1px solid var(--border);
+    }
+    .section.open .section-body { display: block; }
+
+    .section-inner { padding: 20px; }
+
+    /* Pipeline Steps */
+    .step-list { display: flex; flex-direction: column; gap: 0; }
 
     .step-item {
       display: flex;
@@ -112,224 +172,249 @@
       gap: 14px;
       position: relative;
     }
-
     .step-item:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 11px;
-      top: 28px;
-      bottom: -8px;
-      width: 1px;
+      content:'';
+      position:absolute;
+      left:11px; top:28px; bottom:-8px;
+      width:1px;
       background: var(--border);
     }
-
+    .step-item.done::after  { background: rgba(34,197,94,0.3); }
     .step-item.active::after { background: var(--accent); }
-    .step-item.done::after { background: var(--green); opacity: 0.4; }
 
     .step-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
+      width:24px; height:24px;
+      border-radius:50%;
+      border:2px solid var(--border);
       background: var(--surface2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      flex-shrink: 0;
-      margin-top: 2px;
-      z-index: 1;
+      display:flex; align-items:center; justify-content:center;
+      font-size:10px;
+      flex-shrink:0;
+      margin-top:2px;
+      z-index:1;
     }
+    .step-item.done   .step-icon { background:var(--green);  border-color:var(--green);  color:#000; }
+    .step-item.active .step-icon { background:var(--accent); border-color:var(--accent); animation:pulse 2s infinite; }
+    .step-item.pending .step-icon { color: var(--muted2); }
 
-    .step-item.done .step-icon {
-      background: var(--green);
-      border-color: var(--green);
-      color: #000;
-    }
-
-    .step-item.active .step-icon {
-      background: var(--accent);
-      border-color: var(--accent);
-      animation: pulse 2s infinite;
-    }
-
-    .step-body {
-      padding: 2px 0 20px 0;
-      flex: 1;
-    }
-
+    .step-body { padding: 2px 0 20px 0; flex:1; }
     .step-name {
-      font-weight: 600;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-weight:600; font-size:13px;
+      display:flex; align-items:center; gap:8px;
     }
-
-    .step-item.active .step-name { color: var(--accent2); }
+    .step-item.active  .step-name { color: var(--accent2); }
     .step-item.pending .step-name { color: var(--muted2); }
 
     .step-tag {
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
+      font-size:10px; padding:2px 6px;
+      border-radius:4px; font-weight:500;
     }
+    .tag-active  { background:rgba(124,92,252,0.2); color:var(--accent2); }
+    .tag-done    { background:rgba(34,197,94,0.15); color:var(--green); }
 
-    .tag-active { background: rgba(124, 92, 252, 0.2); color: var(--accent2); }
-    .tag-done { background: rgba(34, 197, 94, 0.15); color: var(--green); }
-    .tag-pending { background: var(--surface2); color: var(--muted); }
+    .step-desc { font-size:12px; color:var(--muted); margin-top:2px; }
 
-    .step-desc {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    /* Artifacts */
-    .artifact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .artifact-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      padding: 8px 10px;
-      background: var(--surface2);
-      border-radius: 8px;
-    }
-
-    .artifact-icon { font-size: 14px; }
-    .artifact-name { color: var(--muted); flex: 1; }
-    .artifact-item.done .artifact-name { color: var(--text); }
-
-    /* Designs */
+    /* Design Grid */
     .design-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+      gap: 12px;
     }
 
     .design-thumb {
-      aspect-ratio: 1;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      overflow: hidden;
-      background: var(--surface2);
-      position: relative;
+      border-radius:8px;
+      border:1px solid var(--border);
+      overflow:hidden;
+      background:var(--surface2);
+      aspect-ratio:1;
+      position:relative;
+      cursor:pointer;
+      transition:border-color 0.15s;
     }
-
-    .design-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .design-thumb:hover { border-color: var(--accent2); }
+    .design-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+    .design-thumb .thumb-label {
+      position:absolute; bottom:0; left:0; right:0;
+      background:rgba(0,0,0,0.7);
+      font-size:10px; padding:4px 8px;
+      color:var(--text);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
 
     .design-empty {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted2);
-      font-size: 11px;
-      text-align: center;
-      padding: 16px;
-      height: 80px;
+      grid-column: 1/-1;
+      padding: 32px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      border:1px dashed var(--border2);
+      border-radius:8px;
     }
+
+    /* Lightbox */
+    .lightbox {
+      display:none;
+      position:fixed; inset:0;
+      background:rgba(0,0,0,0.9);
+      z-index:1000;
+      align-items:center;
+      justify-content:center;
+    }
+    .lightbox.open { display:flex; }
+    .lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; }
+    .lightbox-close {
+      position:absolute; top:20px; right:24px;
+      font-size:28px; color:var(--muted);
+      cursor:pointer; line-height:1;
+    }
+    .lightbox-close:hover { color:var(--text); }
 
     /* Ledger */
-    .ledger-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .ledger-list { display:flex; flex-direction:column; gap:8px; }
 
     .ledger-item {
-      padding: 10px 12px;
-      background: var(--surface2);
-      border-radius: 8px;
-      border-left: 2px solid var(--accent);
+      padding:12px 14px;
+      background:var(--surface2);
+      border-radius:8px;
+      border-left:2px solid var(--accent);
+    }
+    .ledger-summary { font-size:13px; margin-bottom:4px; }
+    .ledger-meta { font-size:11px; color:var(--muted); display:flex; gap:12px; flex-wrap:wrap; }
+    .ledger-details {
+      margin-top:8px;
+      padding:8px 10px;
+      background:var(--surface3);
+      border-radius:6px;
+      font-size:11px;
+      color:var(--muted);
+      font-family:monospace;
+      white-space:pre-wrap;
+      word-break:break-all;
     }
 
-    .ledger-summary { font-size: 12px; margin-bottom: 3px; }
-    .ledger-meta { font-size: 11px; color: var(--muted); }
+    /* Artifacts */
+    .artifact-list { display:flex; flex-direction:column; gap:6px; }
+
+    .artifact-item {
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      background:var(--surface2);
+      border-radius:8px;
+      font-size:12px;
+    }
+    .artifact-icon { font-size:15px; flex-shrink:0; }
+    .artifact-info { flex:1; }
+    .artifact-name { font-weight:500; }
+    .artifact-item.pending .artifact-name { color:var(--muted); }
+    .artifact-desc { font-size:11px; color:var(--muted); margin-top:1px; }
+    .artifact-check { font-size:14px; color:var(--green); }
+    .artifact-pending-icon { font-size:12px; color:var(--muted2); }
+
+    /* Files */
+    .file-list { display:flex; flex-direction:column; gap:6px; }
+
+    .file-item {
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      background:var(--surface2);
+      border-radius:8px;
+      font-size:12px;
+      text-decoration:none;
+      color:var(--text);
+      transition:background 0.15s;
+    }
+    .file-item:hover { background:var(--surface3); }
+    .file-icon { font-size:15px; }
+    .file-name { flex:1; font-weight:500; }
+    .file-desc { font-size:11px; color:var(--muted); }
+    .file-arrow { color:var(--muted2); font-size:12px; }
 
     /* Budget */
     .budget-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 0;
+      border-bottom:1px solid var(--border);
+      font-size:13px;
+    }
+    .budget-row:last-child { border-bottom:none; }
+    .budget-label { color:var(--muted); }
+    .budget-value { font-weight:600; }
+    .budget-value.highlight { color:var(--accent2); font-size:15px; }
+
+    .budget-note {
+      font-size:11px; color:var(--muted);
+      margin-top:12px;
+      padding:10px 12px;
+      background:var(--surface2);
+      border-radius:8px;
     }
 
-    .budget-row:last-child { border-bottom: none; }
-    .budget-label { color: var(--muted); }
-    .budget-value { font-weight: 600; }
-    .budget-value.highlight { color: var(--accent2); }
+    /* Iterations */
+    .iter-row {
+      display:flex; justify-content:space-between;
+      padding:8px 0;
+      border-bottom:1px solid var(--border);
+      font-size:12px;
+    }
+    .iter-row:last-child { border-bottom:none; }
+    .iter-label { color:var(--muted); }
+    .iter-val { font-weight:600; color:var(--text); }
+    .iter-max { color:var(--muted2); font-weight:400; }
 
     /* Approval */
     .approval-box {
-      background: rgba(124, 92, 252, 0.08);
-      border: 1px solid var(--accent);
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
+      background:rgba(124,92,252,0.08);
+      border:1px solid rgba(124,92,252,0.4);
+      border-radius:10px;
+      padding:20px;
+      text-align:center;
     }
-
-    .approval-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .approval-desc {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-
-    .btn-row { display: flex; gap: 10px; justify-content: center; }
-
+    .approval-title { font-size:15px; font-weight:700; margin-bottom:6px; }
+    .approval-desc  { font-size:12px; color:var(--muted); margin-bottom:16px; }
+    .btn-row { display:flex; gap:10px; justify-content:center; }
     .btn {
-      padding: 10px 24px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: opacity 0.15s;
+      padding:10px 24px; border-radius:8px;
+      font-size:13px; font-weight:600;
+      cursor:pointer; border:none;
+      transition:opacity 0.15s;
+    }
+    .btn:hover { opacity:0.85; }
+    .btn-approve { background:var(--green); color:#000; }
+    .btn-deny    { background:var(--surface2); color:var(--text); border:1px solid var(--border2); }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      background:var(--surface2);
+      border-radius:4px;
+      height:4px;
+      margin-bottom:20px;
+      overflow:hidden;
+    }
+    .progress-bar-fill {
+      height:100%;
+      background:linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius:4px;
+      transition:width 0.5s ease;
     }
 
-    .btn:hover { opacity: 0.85; }
-    .btn-approve { background: var(--green); color: #000; }
-    .btn-deny { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-
-    /* Misc */
-    .empty-state {
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      padding: 24px 0;
+    /* Vizcom link */
+    .vizcom-link {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:12px; color:var(--accent2);
+      text-decoration:none;
+      padding:6px 12px;
+      border:1px solid rgba(124,92,252,0.3);
+      border-radius:6px;
+      margin-bottom:16px;
+      transition:all 0.15s;
     }
+    .vizcom-link:hover { background:rgba(124,92,252,0.1); }
 
-    .loading { color: var(--muted); font-size: 12px; }
+    .update-time { font-size:11px; color:var(--muted2); text-align:right; padding:8px 0; }
 
-    .refresh-time {
-      font-size: 11px;
-      color: var(--muted2);
-      text-align: right;
-      margin-top: 8px;
-    }
-
-    @media (max-width: 800px) {
-      .container { grid-template-columns: 1fr; padding: 16px; }
-      header { padding: 16px; }
+    @media(max-width:800px){
+      .container{ grid-template-columns:1fr; padding:16px; }
+      header{ padding:14px 16px; }
     }
   </style>
 </head>
@@ -337,36 +422,171 @@
 
 <header>
   <div class="logo">OBJECT <span>001</span></div>
-  <div class="status-badge">
-    <div class="dot" id="live-dot"></div>
-    <span id="status-text">Loading...</span>
+  <div class="header-right">
+    <div class="status-badge">
+      <div class="dot"></div>
+      <span id="status-text">Loading...</span>
+    </div>
+    <button class="refresh-btn" onclick="refresh()">↻ Refresh</button>
   </div>
 </header>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">×</span>
+  <img id="lightbox-img" src="" alt="" />
+</div>
 
 <div class="container">
   <div class="main">
 
-    <!-- Pipeline Progress -->
-    <div class="card">
-      <div class="card-title">Pipeline</div>
-      <div class="step-list" id="step-list">
-        <div class="loading">Loading state...</div>
+    <!-- Pipeline -->
+    <div class="section open" id="sec-pipeline">
+      <div class="section-header" onclick="toggle('sec-pipeline')">
+        <div class="section-header-left">
+          <span class="section-icon">🗺️</span>
+          <div>
+            <div class="section-title">Pipeline</div>
+            <div class="section-subtitle" id="pipeline-subtitle">Loading...</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="section-badge badge-active" id="pipeline-badge">—</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+          <div class="step-list" id="step-list"><div style="color:var(--muted);font-size:12px">Loading...</div></div>
+        </div>
       </div>
     </div>
 
     <!-- Design Renders -->
-    <div class="card">
-      <div class="card-title">Design Renders</div>
-      <div id="design-section">
-        <div class="design-empty">No designs yet — starts at design_explore step</div>
+    <div class="section open" id="sec-designs">
+      <div class="section-header" onclick="toggle('sec-designs')">
+        <div class="section-header-left">
+          <span class="section-icon">🎨</span>
+          <div>
+            <div class="section-title">Design Renders</div>
+            <div class="section-subtitle">Vizcom-generated design iterations</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="section-badge badge-count" id="designs-count">0 renders</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div id="vizcom-link-wrap"></div>
+          <div class="design-grid" id="design-grid">
+            <div class="design-empty">No renders yet — starts at the Design Explore step</div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Decision Log -->
-    <div class="card">
-      <div class="card-title">Decision Log</div>
-      <div id="ledger-section">
-        <div class="loading">Loading...</div>
+    <div class="section open" id="sec-ledger">
+      <div class="section-header" onclick="toggle('sec-ledger')">
+        <div class="section-header-left">
+          <span class="section-icon">📋</span>
+          <div>
+            <div class="section-title">Decision Log</div>
+            <div class="section-subtitle">Every decision the agent makes is logged here</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="section-badge badge-count" id="ledger-count">0 entries</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="ledger-list" id="ledger-list"><div style="color:var(--muted);font-size:12px">Loading...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- State Files -->
+    <div class="section" id="sec-files">
+      <div class="section-header" onclick="toggle('sec-files')">
+        <div class="section-header-left">
+          <span class="section-icon">📁</span>
+          <div>
+            <div class="section-title">State Files</div>
+            <div class="section-subtitle">Raw JSON files backing this dashboard</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="file-list">
+            <a class="file-item" href="https://github.com/amywork777/object-001/blob/main/state/project.json" target="_blank">
+              <span class="file-icon">⚙️</span>
+              <div class="file-info">
+                <div class="file-name">project.json</div>
+                <div class="file-desc">Current step, artifacts, iteration counts</div>
+              </div>
+              <span class="file-arrow">↗</span>
+            </a>
+            <a class="file-item" href="https://github.com/amywork777/object-001/blob/main/state/ledger.json" target="_blank">
+              <span class="file-icon">📋</span>
+              <div class="file-info">
+                <div class="file-name">ledger.json</div>
+                <div class="file-desc">Full decision history log</div>
+              </div>
+              <span class="file-arrow">↗</span>
+            </a>
+            <a class="file-item" href="https://github.com/amywork777/object-001/blob/main/state/vizcom.json" target="_blank">
+              <span class="file-icon">🎨</span>
+              <div class="file-info">
+                <div class="file-name">vizcom.json</div>
+                <div class="file-desc">Workbench ID, drawing IDs, thumbnail URLs</div>
+              </div>
+              <span class="file-arrow">↗</span>
+            </a>
+            <a class="file-item" href="https://github.com/amywork777/object-001/blob/main/state/design-scores.json" target="_blank" id="file-design-scores">
+              <span class="file-icon">📊</span>
+              <div class="file-info">
+                <div class="file-name">design-scores.json</div>
+                <div class="file-desc">Design evaluation scores (created at design_explore)</div>
+              </div>
+              <span class="file-arrow">↗</span>
+            </a>
+            <a class="file-item" href="https://github.com/amywork777/object-001/blob/main/state/spend-proposal.json" target="_blank">
+              <span class="file-icon">💰</span>
+              <div class="file-info">
+                <div class="file-name">spend-proposal.json</div>
+                <div class="file-desc">Manufacturer quotes and spend breakdown (created at find_manufacturers)</div>
+              </div>
+              <span class="file-arrow">↗</span>
+            </a>
+            <a class="file-item" href="https://github.com/amywork777/object-001/blob/main/skills/object-001/SKILL.md" target="_blank">
+              <span class="file-icon">🤖</span>
+              <div class="file-info">
+                <div class="file-name">SKILL.md</div>
+                <div class="file-desc">Agent instructions — how the AI runs each step</div>
+              </div>
+              <span class="file-arrow">↗</span>
+            </a>
+            <a class="file-item" href="https://github.com/amywork777/object-001" target="_blank">
+              <span class="file-icon">🐙</span>
+              <div class="file-info">
+                <div class="file-name">GitHub Repository</div>
+                <div class="file-desc">amywork777/object-001 — full source</div>
+              </div>
+              <span class="file-arrow">↗</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -375,41 +595,59 @@
   <div class="sidebar">
 
     <!-- Artifacts -->
-    <div class="card">
-      <div class="card-title">Artifacts</div>
-      <div class="artifact-grid" id="artifact-grid">
-        <div class="loading">Loading...</div>
+    <div class="section open" id="sec-artifacts">
+      <div class="section-header" onclick="toggle('sec-artifacts')">
+        <div class="section-header-left">
+          <span class="section-icon">✅</span>
+          <div>
+            <div class="section-title">Artifacts</div>
+            <div class="section-subtitle" id="artifacts-subtitle">0/8 complete</div>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
       </div>
-    </div>
-
-    <!-- Budget -->
-    <div class="card">
-      <div class="card-title">Budget</div>
-      <div id="budget-section">
-        <div class="budget-row">
-          <span class="budget-label">Target budget</span>
-          <span class="budget-value">$1,000–5,000</span>
-        </div>
-        <div class="budget-row">
-          <span class="budget-label">Target units</span>
-          <span class="budget-value">10–20</span>
-        </div>
-        <div class="budget-row">
-          <span class="budget-label">Quotes received</span>
-          <span class="budget-value" id="quotes-count">0</span>
-        </div>
-        <div class="budget-row">
-          <span class="budget-label">Spend proposed</span>
-          <span class="budget-value highlight" id="spend-proposed">—</span>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="artifact-list" id="artifact-list"><div style="color:var(--muted);font-size:12px">Loading...</div></div>
         </div>
       </div>
     </div>
 
-    <!-- Approval (shown only at human_approval step) -->
+    <!-- Budget & Iterations -->
+    <div class="section open" id="sec-budget">
+      <div class="section-header" onclick="toggle('sec-budget')">
+        <div class="section-header-left">
+          <span class="section-icon">💰</span>
+          <div>
+            <div class="section-title">Budget & Scope</div>
+            <div class="section-subtitle">Target, actual, iterations remaining</div>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div id="budget-rows">
+            <div class="budget-row"><span class="budget-label">Target budget</span><span class="budget-value">$1,000–5,000</span></div>
+            <div class="budget-row"><span class="budget-label">Target units</span><span class="budget-value">10–20</span></div>
+            <div class="budget-row"><span class="budget-label">Spend proposed</span><span class="budget-value highlight" id="spend-val">—</span></div>
+          </div>
+          <div style="margin-top:16px;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Iterations</div>
+            <div id="iter-rows"></div>
+          </div>
+          <div class="budget-note">
+            The agent can pivot on product, refine designs, or switch manufacturers — within the limits above. Human approval required before manufacturing.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Approval -->
     <div id="approval-card" style="display:none">
       <div class="approval-box">
         <div class="approval-title">⚡ Approval Required</div>
-        <div class="approval-desc" id="approval-desc">Review the spend proposal and approve to proceed to manufacturing.</div>
+        <div class="approval-desc">Review the spend proposal and approve to proceed to manufacturing.</div>
         <div class="btn-row">
           <button class="btn btn-approve" onclick="handleApprove()">Approve</button>
           <button class="btn btn-deny" onclick="handleDeny()">Deny</button>
@@ -417,63 +655,63 @@
       </div>
     </div>
 
-    <div class="refresh-time" id="refresh-time"></div>
+    <div class="update-time" id="update-time"></div>
+
   </div>
 </div>
 
 <script>
-const REPO = 'amywork777/object-001';
+const REPO   = 'amywork777/object-001';
 const BRANCH = 'main';
-const RAW = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
+const RAW    = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
 
 const STEPS = [
-  { id: 'market_research',   label: 'Market Research',    desc: 'Competitive analysis, opportunity sizing' },
-  { id: 'product_decision',  label: 'Product Decision',   desc: 'Choose the product direction' },
-  { id: 'design_explore',    label: 'Design Explore',     desc: 'Generate 4 design directions in Vizcom' },
-  { id: 'design_refine',     label: 'Design Refine',      desc: 'Iterate on top designs' },
-  { id: 'design_final',      label: 'Final Design',       desc: 'Hero renders + production reference' },
-  { id: 'engineering',       label: 'Engineering',        desc: 'BOM, specs, tolerances' },
-  { id: 'find_manufacturers',label: 'Find Manufacturers', desc: 'RFQ outreach + quotes' },
-  { id: 'human_approval',    label: 'Human Approval',     desc: 'Review and approve spend' },
-  { id: 'manufacture',       label: 'Manufacture',        desc: 'Production underway' },
-  { id: 'ship_launch',       label: 'Ship & Launch',      desc: 'Fulfillment and release' },
+  { id:'market_research',    label:'Market Research',     desc:'Competitive analysis, opportunity sizing, target segment' },
+  { id:'product_decision',   label:'Product Decision',    desc:'Choose the product direction based on research' },
+  { id:'design_explore',     label:'Design Explore',      desc:'Generate 4 distinct design directions in Vizcom' },
+  { id:'design_refine',      label:'Design Refine',       desc:'Iterate on top designs with targeted prompts' },
+  { id:'design_final',       label:'Final Design',        desc:'Hero renders + side/top views for manufacturing reference' },
+  { id:'engineering',        label:'Engineering',         desc:'Bill of materials, specs, tolerances, assembly notes' },
+  { id:'find_manufacturers', label:'Find Manufacturers',  desc:'RFQ outreach, evaluate quotes, select partner' },
+  { id:'human_approval',     label:'Human Approval',      desc:'Review spend proposal — you gate this step' },
+  { id:'manufacture',        label:'Manufacture',         desc:'Production run underway' },
+  { id:'ship_launch',        label:'Ship & Launch',       desc:'Fulfillment, packaging, public release' },
 ];
 
-const ARTIFACT_LABELS = {
-  researchReport:     { label: 'Research Report', icon: '📊' },
-  productDecision:    { label: 'Product Decision', icon: '🎯' },
-  designScores:       { label: 'Design Scores', icon: '🎨' },
-  selectedDesign:     { label: 'Selected Design', icon: '✅' },
-  engineeringSpec:    { label: 'Engineering Spec', icon: '⚙️' },
-  bom:                { label: 'Bill of Materials', icon: '📋' },
-  manufacturerQuotes: { label: 'Manufacturer Quotes', icon: '💰' },
-  spendProposal:      { label: 'Spend Proposal', icon: '📝' },
-};
+const ARTIFACTS = [
+  { key:'researchReport',     icon:'📊', label:'Research Report',     desc:'Market analysis and opportunity brief' },
+  { key:'productDecision',    icon:'🎯', label:'Product Decision',    desc:'Chosen direction with rationale' },
+  { key:'designScores',       icon:'🎨', label:'Design Scores',       desc:'Scored evaluation of all design options' },
+  { key:'selectedDesign',     icon:'⭐', label:'Selected Design',     desc:'Winning design chosen for production' },
+  { key:'engineeringSpec',    icon:'⚙️', label:'Engineering Spec',    desc:'Full technical specification' },
+  { key:'bom',                icon:'📋', label:'Bill of Materials',   desc:'Component list with quantities and sources' },
+  { key:'manufacturerQuotes', icon:'🏭', label:'Manufacturer Quotes', desc:'Received quotes from shortlisted partners' },
+  { key:'spendProposal',      icon:'💰', label:'Spend Proposal',      desc:'Final cost breakdown for human approval' },
+];
+
+function toggle(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function stepIndex(id) { return STEPS.findIndex(s => s.id === id); }
 
 async function fetchJSON(path) {
   const r = await fetch(`${RAW}/${path}?_=${Date.now()}`);
-  if (!r.ok) throw new Error(`${r.status} ${path}`);
+  if (!r.ok) throw new Error(r.status);
   return r.json();
 }
 
-function stepIndex(id) {
-  return STEPS.findIndex(s => s.id === id);
-}
-
 function renderSteps(currentStep) {
-  const currentIdx = stepIndex(currentStep);
+  const ci = stepIndex(currentStep);
   return STEPS.map((step, i) => {
-    let cls = 'pending', tagCls = 'tag-pending', tagLabel = '';
-    if (i < currentIdx) { cls = 'done'; tagCls = 'tag-done'; tagLabel = '✓'; }
-    else if (i === currentIdx) { cls = 'active'; tagCls = 'tag-active'; tagLabel = 'In Progress'; }
+    let cls = 'pending', tag = '';
+    if (i < ci)  { cls = 'done';   tag = `<span class="step-tag tag-done">✓ Done</span>`; }
+    if (i === ci){ cls = 'active'; tag = `<span class="step-tag tag-active">▶ In Progress</span>`; }
     return `
       <div class="step-item ${cls}">
-        <div class="step-icon">${i < currentIdx ? '✓' : i + 1}</div>
+        <div class="step-icon">${i < ci ? '✓' : i+1}</div>
         <div class="step-body">
-          <div class="step-name">
-            ${step.label}
-            ${tagLabel ? `<span class="step-tag ${tagCls}">${tagLabel}</span>` : ''}
-          </div>
+          <div class="step-name">${step.label} ${tag}</div>
           <div class="step-desc">${step.desc}</div>
         </div>
       </div>`;
@@ -481,38 +719,74 @@ function renderSteps(currentStep) {
 }
 
 function renderArtifacts(artifacts) {
-  return Object.entries(ARTIFACT_LABELS).map(([key, { label, icon }]) => {
-    const val = artifacts[key];
-    const done = val === true || (val !== null && val !== false && val !== undefined);
+  let done = 0;
+  const html = ARTIFACTS.map(a => {
+    const val = artifacts[a.key];
+    const complete = val === true || (val !== null && val !== false && val !== undefined);
+    if (complete) done++;
     return `
-      <div class="artifact-item ${done ? 'done' : ''}">
-        <span class="artifact-icon">${icon}</span>
-        <span class="artifact-name">${label}</span>
-        ${done ? '<span>✓</span>' : ''}
+      <div class="artifact-item ${complete ? 'done' : 'pending'}">
+        <span class="artifact-icon">${a.icon}</span>
+        <div class="artifact-info">
+          <div class="artifact-name">${a.label}</div>
+          <div class="artifact-desc">${a.desc}</div>
+        </div>
+        ${complete
+          ? `<span class="artifact-check">✓</span>`
+          : `<span class="artifact-pending-icon">○</span>`}
+      </div>`;
+  }).join('');
+  document.getElementById('artifacts-subtitle').textContent = `${done}/${ARTIFACTS.length} complete`;
+  return html;
+}
+
+function renderLedger(entries) {
+  if (!entries.length) return `<div style="color:var(--muted);font-size:12px;padding:8px 0">No decisions logged yet</div>`;
+  return [...entries].reverse().map(e => {
+    const details = e.details && Object.keys(e.details).length
+      ? `<div class="ledger-details">${JSON.stringify(e.details, null, 2)}</div>` : '';
+    return `
+      <div class="ledger-item">
+        <div class="ledger-summary">${e.summary}</div>
+        <div class="ledger-meta">
+          <span>Step: ${e.step}</span>
+          <span>Type: ${e.type}</span>
+          <span>${new Date(e.timestamp).toLocaleString()}</span>
+        </div>
+        ${details}
       </div>`;
   }).join('');
 }
 
-function renderLedger(entries) {
-  if (!entries.length) return '<div class="empty-state">No decisions logged yet</div>';
-  return `<div class="ledger-list">${
-    [...entries].reverse().slice(0, 8).map(e => `
-      <div class="ledger-item">
-        <div class="ledger-summary">${e.summary}</div>
-        <div class="ledger-meta">${e.step} · ${new Date(e.timestamp).toLocaleString()}</div>
-      </div>`).join('')
-  }</div>`;
+function renderDesigns(drawings) {
+  if (!drawings || !drawings.length)
+    return `<div class="design-empty">No renders yet — generates at the Design Explore step</div>`;
+  return drawings.map(d => `
+    <div class="design-thumb" onclick="openLightbox('${d.thumbnailPath}', '${d.name}')">
+      <img src="${d.thumbnailPath}" alt="${d.name}" loading="lazy" onerror="this.parentElement.style.display='none'" />
+      <div class="thumb-label">${d.name}</div>
+    </div>`).join('');
 }
 
-function renderDesigns(drawings) {
-  if (!drawings.length) return '<div class="design-empty">No designs yet — starts at design_explore step</div>';
-  return `<div class="design-grid">${
-    drawings.map(d => `
-      <div class="design-thumb">
-        <img src="${d.thumbnailPath}" alt="${d.name}" loading="lazy"
-             onerror="this.style.display='none'" />
-      </div>`).join('')
-  }</div>`;
+function renderIterations(iterations, maxIterations) {
+  return Object.entries(iterations).map(([key, val]) => {
+    const max = maxIterations[key];
+    const label = key.replace(/([A-Z])/g,' $1').replace(/^./,s=>s.toUpperCase());
+    return `
+      <div class="iter-row">
+        <span class="iter-label">${label}</span>
+        <span class="iter-val">${val} <span class="iter-max">/ ${max}</span></span>
+      </div>`;
+  }).join('');
+}
+
+function openLightbox(src, alt) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-img').alt = alt;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
 }
 
 async function refresh() {
@@ -523,51 +797,66 @@ async function refresh() {
       fetchJSON('state/vizcom.json').catch(() => ({ drawings: [] })),
     ]);
 
-    // Steps
-    document.getElementById('step-list').innerHTML = renderSteps(project.currentStep);
-
-    // Artifacts
-    document.getElementById('artifact-grid').innerHTML = renderArtifacts(project.artifacts);
-
-    // Ledger
-    document.getElementById('ledger-section').innerHTML = renderLedger(ledger);
-
-    // Designs
-    document.getElementById('design-section').innerHTML = renderDesigns(vizcom.drawings || []);
-
-    // Budget
-    document.getElementById('quotes-count').textContent =
-      (project.artifacts.manufacturerQuotes ? 'Received' : '0');
-    document.getElementById('spend-proposed').textContent =
-      project.artifacts.spendProposal ? 'Pending review' : '—';
-
-    // Approval card
-    const approvalCard = document.getElementById('approval-card');
-    approvalCard.style.display = project.currentStep === 'human_approval' ? 'block' : 'none';
+    const ci = stepIndex(project.currentStep);
+    const pct = Math.round((ci / STEPS.length) * 100);
 
     // Header
     document.getElementById('status-text').textContent =
-      `Step ${stepIndex(project.currentStep) + 1}/10 · ${project.currentStep.replace(/_/g, ' ')}`;
+      `Step ${ci+1}/10 · ${project.currentStep.replace(/_/g,' ')}`;
 
-    document.getElementById('refresh-time').textContent =
-      `Last updated ${new Date().toLocaleTimeString()}`;
+    // Pipeline
+    document.getElementById('pipeline-subtitle').textContent =
+      `${ci} of ${STEPS.length} steps complete`;
+    document.getElementById('pipeline-badge').textContent =
+      STEPS[ci]?.label || project.currentStep;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('step-list').innerHTML = renderSteps(project.currentStep);
 
-  } catch (e) {
+    // Artifacts
+    document.getElementById('artifact-list').innerHTML = renderArtifacts(project.artifacts);
+
+    // Ledger
+    document.getElementById('ledger-count').textContent = `${ledger.length} entries`;
+    document.getElementById('ledger-list').innerHTML = renderLedger(ledger);
+
+    // Designs
+    const drawings = vizcom.drawings || [];
+    document.getElementById('designs-count').textContent = `${drawings.length} renders`;
+    document.getElementById('design-grid').innerHTML = renderDesigns(drawings);
+
+    // Vizcom workbench link
+    const wbId = vizcom.workbenchId;
+    document.getElementById('vizcom-link-wrap').innerHTML = wbId
+      ? `<a class="vizcom-link" href="https://pr-5256.dev.vizcom.com/workbench/${wbId}" target="_blank">
+           🎨 Open in Vizcom ↗
+         </a>`
+      : '';
+
+    // Budget
+    document.getElementById('spend-val').textContent =
+      project.artifacts.spendProposal ? 'Pending review' : '—';
+    document.getElementById('iter-rows').innerHTML =
+      renderIterations(project.iterations, project.maxIterations);
+
+    // Approval
+    document.getElementById('approval-card').style.display =
+      project.currentStep === 'human_approval' ? 'block' : 'none';
+
+    document.getElementById('update-time').textContent =
+      `Updated ${new Date().toLocaleTimeString()}`;
+
+  } catch(e) {
     console.error(e);
     document.getElementById('status-text').textContent = 'Error loading state';
   }
 }
 
-function handleApprove() {
-  alert('To approve: message the agent with /object-001 approve');
+function handleApprove() { alert('Send the agent: /object-001 approve'); }
+function handleDeny()    {
+  const r = prompt('Reason for denial:');
+  if (r) alert(`Send the agent: /object-001 deny ${r}`);
 }
 
-function handleDeny() {
-  const reason = prompt('Reason for denial:');
-  if (reason) alert(`To deny: message the agent with /object-001 deny ${reason}`);
-}
-
-// Initial load + auto-refresh every 30s
 refresh();
 setInterval(refresh, 30000);
 </script>
