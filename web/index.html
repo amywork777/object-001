@@ -73,6 +73,32 @@
 
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
+    .timer-display {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1px;
+      padding: 4px 12px;
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      background: var(--surface2);
+    }
+    .timer-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--muted2);
+      text-transform: uppercase;
+    }
+    .timer-value {
+      font-size: 15px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+      color: var(--accent2);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
     .refresh-btn {
       background: none;
       border: 1px solid var(--border2);
@@ -423,6 +449,10 @@
 <header>
   <div class="logo">OBJECT <span>001</span></div>
   <div class="header-right">
+    <div class="timer-display">
+      <span class="timer-label">ELAPSED</span>
+      <span class="timer-value" id="timer-value">--:--:--</span>
+    </div>
     <div class="status-badge">
       <div class="dot"></div>
       <span id="status-text">Loading...</span>
@@ -828,6 +858,12 @@ async function refresh() {
       fetchJSON('state/errors.json').catch(() => []),
     ]);
 
+    // Set timer from project start
+    if (project.createdAt) {
+      projectStartTime = new Date(project.createdAt).getTime();
+      updateTimer();
+    }
+
     const ci = stepIndex(project.currentStep);
     const pct = Math.round((ci / STEPS.length) * 100);
 
@@ -918,6 +954,26 @@ function handleDeny()    {
   const r = prompt('Reason for denial:');
   if (r) alert(`Send the agent: /object-001 deny ${r}`);
 }
+
+// Timer
+let projectStartTime = null;
+
+function updateTimer() {
+  if (!projectStartTime) return;
+  const elapsed = Date.now() - projectStartTime;
+  const totalSecs = Math.floor(elapsed / 1000);
+  const days  = Math.floor(totalSecs / 86400);
+  const hours = Math.floor((totalSecs % 86400) / 3600);
+  const mins  = Math.floor((totalSecs % 3600) / 60);
+  const secs  = totalSecs % 60;
+  const pad   = n => String(n).padStart(2, '0');
+  document.getElementById('timer-value').textContent =
+    days > 0
+      ? `${days}d ${pad(hours)}:${pad(mins)}:${pad(secs)}`
+      : `${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+}
+
+setInterval(updateTimer, 1000);
 
 refresh();
 setInterval(refresh, 30000);
