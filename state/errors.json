@@ -17,7 +17,7 @@
     "summary": "Claimed 4 designs were generated and visible without visually verifying the canvas",
     "root_cause": "The API returned 4 drawing IDs so I reported 4 designs as done. But I never opened the workspace to confirm all 4 were actually on the canvas. Only 1 was visible.",
     "fix": "After any Vizcom agent session, ALWAYS open the workbench in the browser and take a screenshot to visually confirm every output before marking the step complete or reporting results to the user.",
-    "resolved": false
+    "resolved": true
   },
   {
     "id": "00000000-0000-0000-0001-000000000003",
@@ -27,6 +27,6 @@
     "summary": "Called illustration-style sketches 'designs' without running the render step to produce photorealistic product images",
     "root_cause": "TEXT_TO_IMAGE produces concept sketches, not product renders. The RENDER step is required to make outputs look like real products. I skipped this and marked the step complete.",
     "fix": "design_explore is NOT complete until: (1) sketches are generated, (2) RENDER is run on each sketch, (3) rendered outputs are visually confirmed in the browser. Only then log step as complete.",
-    "resolved": false
+    "resolved": true
   }
 ]
