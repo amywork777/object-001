@@ -166,5 +166,28 @@
     "step": "engineering",
     "summary": "Engineering step started \u2014 generating BOM and spec sheet.",
     "details": {}
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000013",
+    "timestamp": "2026-03-05T22:34:44Z",
+    "type": "step_complete",
+    "step": "engineering",
+    "summary": "Engineering spec and BOM complete. Est. cost: $2,000-$4,200 for 20 units. Within budget.",
+    "details": {
+      "specFile": "state/engineering-spec.md",
+      "bomFile": "state/bom.md",
+      "costLow": 1740,
+      "costMid": 2600,
+      "costHigh": 3500,
+      "withinBudget": true
+    }
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000014",
+    "timestamp": "2026-03-05T22:34:44Z",
+    "type": "step_start",
+    "step": "find_manufacturers",
+    "summary": "Searching for manufacturers for CNC shells, PCB assembly, and full device assembly.",
+    "details": {}
   }
 ]
