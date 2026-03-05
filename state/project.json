@@ -1,0 +1,41 @@
+{
+  "projectName": "OBJECT 001",
+  "description": "AI-designed limited-edition handheld gaming device",
+  "currentStep": "market_research",
+  "steps": [
+    "market_research",
+    "product_decision",
+    "design_explore",
+    "design_refine",
+    "design_final",
+    "engineering",
+    "find_manufacturers",
+    "human_approval",
+    "manufacture",
+    "ship_launch",
+    "complete"
+  ],
+  "iterations": {
+    "productPivots": 0,
+    "designRefinements": 0,
+    "manufacturerSwitches": 0
+  },
+  "maxIterations": {
+    "productPivots": 2,
+    "designRefinements": 3,
+    "manufacturerSwitches": 2
+  },
+  "artifacts": {
+    "researchReport": false,
+    "productDecision": false,
+    "designScores": false,
+    "selectedDesign": null,
+    "engineeringSpec": false,
+    "bom": false,
+    "manufacturerQuotes": false,
+    "spendProposal": false,
+    "approvalStatus": null
+  },
+  "createdAt": "2026-03-04T00:00:00Z",
+  "lastUpdated": "2026-03-04T00:00:00Z"
+}

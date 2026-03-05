@@ -1,0 +1,11 @@
+{
+  "product": null,
+  "description": null,
+  "unitCount": null,
+  "costPerUnit": null,
+  "totalCost": null,
+  "manufacturer": null,
+  "breakdown": [],
+  "renderPaths": [],
+  "status": "not_created"
+}
