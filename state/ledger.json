@@ -189,5 +189,30 @@
     "step": "find_manufacturers",
     "summary": "Searching for manufacturers for CNC shells, PCB assembly, and full device assembly.",
     "details": {}
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000015",
+    "timestamp": "2026-03-05T22:40:37Z",
+    "type": "decision",
+    "step": "find_manufacturers",
+    "summary": "Vizcom extract-parts feature run on final design. 8 components identified with materials, finishes, and manufacturing processes.",
+    "details": {
+      "method": "Vizcom DEV_DESIGNER_V1 chat bar \u2014 extract parts + BOM prompt",
+      "partsExtracted": 8,
+      "outputFile": "state/bom-vizcom.md",
+      "keyMaterials": [
+        "6061-T6 Aluminum (CNC, Type II anodized)",
+        "IPS LCD + cover glass",
+        "ABS/POM plastic buttons (burgundy)",
+        "Perforated aluminum speaker grille"
+      ],
+      "assemblyProcesses": [
+        "CNC machining",
+        "Type II anodizing",
+        "Injection molding",
+        "PCB assembly",
+        "Final mechanical assembly"
+      ]
+    }
   }
 ]
