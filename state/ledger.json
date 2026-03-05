@@ -123,5 +123,48 @@
     "step": "design_refine",
     "summary": "Design refinement started.",
     "details": {}
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000009",
+    "timestamp": "2026-03-05T22:27:48Z",
+    "type": "step_complete",
+    "step": "design_refine",
+    "summary": "3 refined variations generated and verified. Selected: Retro Premium Brushed Metal.",
+    "details": {
+      "selectedId": "adbf947c-7a02-4cdb-89c1-4b714e6ad1d5",
+      "selectedName": "Retro Premium Brushed Metal",
+      "reason": "Brushed metal faceplate with burgundy buttons best fits collector aesthetic \u2014 premium materials, strong visual identity, clearly a design object not a toy"
+    }
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000010",
+    "timestamp": "2026-03-05T22:27:48Z",
+    "type": "step_start",
+    "step": "design_final",
+    "summary": "Final design step started \u2014 generating hero render, side profile, and top-down view.",
+    "details": {
+      "selectedDesign": "adbf947c-7a02-4cdb-89c1-4b714e6ad1d5"
+    }
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000011",
+    "timestamp": "2026-03-05T22:32:52Z",
+    "type": "step_complete",
+    "step": "design_final",
+    "summary": "Final renders complete: hero shot, side profile, rear view \u2014 all visually verified.",
+    "details": {
+      "heroId": "d8e0c42c-2bc5-4edd-a26a-53f817d0d373",
+      "sideId": "24b0147d-72fe-4d58-8001-44fe189f782a",
+      "rearId": "e9f566f8-8a6e-4a5b-8b78-3c4a7b703048",
+      "note": "First hero shot was off-brief (unicorn), re-run with explicit material/color description"
+    }
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000012",
+    "timestamp": "2026-03-05T22:32:52Z",
+    "type": "step_start",
+    "step": "engineering",
+    "summary": "Engineering step started \u2014 generating BOM and spec sheet.",
+    "details": {}
   }
 ]

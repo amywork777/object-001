@@ -1,35 +1,15 @@
 {
   "projectName": "OBJECT 001",
   "description": "AI-designed limited-edition handheld gaming device",
-  "currentStep": "design_refine",
-  "steps": [
-    "market_research",
-    "product_decision",
-    "design_explore",
-    "design_refine",
-    "design_final",
-    "engineering",
-    "find_manufacturers",
-    "human_approval",
-    "manufacture",
-    "ship_launch",
-    "complete"
-  ],
-  "iterations": {
-    "productPivots": 0,
-    "designRefinements": 0,
-    "manufacturerSwitches": 0
-  },
-  "maxIterations": {
-    "productPivots": 2,
-    "designRefinements": 3,
-    "manufacturerSwitches": 2
-  },
+  "currentStep": "engineering",
+  "steps": ["market_research","product_decision","design_explore","design_refine","design_final","engineering","find_manufacturers","human_approval","manufacture","ship_launch","complete"],
+  "iterations": {"productPivots": 0, "designRefinements": 1, "manufacturerSwitches": 0},
+  "maxIterations": {"productPivots": 2, "designRefinements": 3, "manufacturerSwitches": 2},
   "artifacts": {
     "researchReport": true,
     "productDecision": true,
-    "designScores": false,
-    "selectedDesign": null,
+    "designScores": true,
+    "selectedDesign": "adbf947c-7a02-4cdb-89c1-4b714e6ad1d5",
     "engineeringSpec": false,
     "bom": false,
     "manufacturerQuotes": false,
@@ -37,23 +17,13 @@
     "approvalStatus": null
   },
   "stepTimings": {
-    "market_research": {
-      "startedAt": "2026-03-05T22:11:26Z",
-      "completedAt": "2026-03-05T22:12:33Z"
-    },
-    "product_decision": {
-      "startedAt": "2026-03-05T22:12:33Z",
-      "completedAt": "2026-03-05T22:13:16Z"
-    },
-    "design_explore": {
-      "startedAt": "2026-03-05T22:13:16Z",
-      "completedAt": "2026-03-05T22:24:11Z"
-    },
-    "design_refine": {
-      "startedAt": "2026-03-05T22:24:11Z",
-      "completedAt": null
-    }
+    "market_research": {"startedAt": "2026-03-05T22:11:26Z", "completedAt": "2026-03-05T22:12:33Z"},
+    "product_decision": {"startedAt": "2026-03-05T22:12:33Z", "completedAt": "2026-03-05T22:13:16Z"},
+    "design_explore":   {"startedAt": "2026-03-05T22:13:16Z", "completedAt": "2026-03-05T22:24:11Z"},
+    "design_refine":    {"startedAt": "2026-03-05T22:24:11Z", "completedAt": "2026-03-05T22:27:48Z"},
+    "design_final":     {"startedAt": "2026-03-05T22:27:48Z", "completedAt": "2026-03-05T22:32:52Z"},
+    "engineering":      {"startedAt": "2026-03-05T22:32:52Z", "completedAt": null}
   },
   "createdAt": "2026-03-05T22:11:26Z",
-  "lastUpdated": "2026-03-05T22:24:11Z"
+  "lastUpdated": "2026-03-05T22:32:52Z"
 }

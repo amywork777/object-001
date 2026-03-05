@@ -6,38 +6,65 @@
     {
       "id": "d19b69bc-9938-4700-91d4-03ebb6d972a4",
       "name": "Ultra-Minimal",
-      "description": "Matte black monolith, clean angular form, studio lighting",
       "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/d19b69bc-9938-4700-91d4-03ebb6d972a4",
-      "step": "design_explore",
-      "direction": 1,
-      "visuallyVerified": true
+      "step": "design_explore", "direction": 1, "visuallyVerified": true
     },
     {
       "id": "7ebfc96f-dec3-443e-b765-c602c314408c",
       "name": "Warm Retro",
-      "description": "Cream Game Boy-inspired, photorealistic 3D render",
       "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/7ebfc96f-dec3-443e-b765-c602c314408c",
-      "step": "design_explore",
-      "direction": 2,
-      "visuallyVerified": true
+      "step": "design_explore", "direction": 2, "visuallyVerified": true
     },
     {
       "id": "fa6703fc-fb45-46fc-bbd7-ece81f0d2aef",
       "name": "Industrial",
-      "description": "Brushed aluminum, exposed screws, tactical feel",
       "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/fa6703fc-fb45-46fc-bbd7-ece81f0d2aef",
-      "step": "design_explore",
-      "direction": 3,
-      "visuallyVerified": true
+      "step": "design_explore", "direction": 3, "visuallyVerified": true
     },
     {
       "id": "25ca3d92-1362-453c-a321-98155ff5b244",
       "name": "Translucent Frosted",
-      "description": "See-through shell showing internals, pastel pink/purple gradient",
       "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/25ca3d92-1362-453c-a321-98155ff5b244",
-      "step": "design_explore",
-      "direction": 4,
-      "visuallyVerified": true
+      "step": "design_explore", "direction": 4, "visuallyVerified": true
+    },
+    {
+      "id": "34d362b0-d127-436d-a267-fdab96be0343",
+      "name": "Retro Dark Charcoal",
+      "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/34d362b0-d127-436d-a267-fdab96be0343",
+      "step": "design_refine", "direction": 1, "visuallyVerified": true
+    },
+    {
+      "id": "0a5153ca-9460-4bc3-a9ce-2544c0ffebbc",
+      "name": "Retro Slim Ivory",
+      "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/0a5153ca-9460-4bc3-a9ce-2544c0ffebbc",
+      "step": "design_refine", "direction": 2, "visuallyVerified": true
+    },
+    {
+      "id": "adbf947c-7a02-4cdb-89c1-4b714e6ad1d5",
+      "name": "Retro Premium Brushed Metal",
+      "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/adbf947c-7a02-4cdb-89c1-4b714e6ad1d5",
+      "step": "design_refine", "direction": 3, "visuallyVerified": true, "selected": true
+    },
+    {
+      "id": "d8e0c42c-2bc5-4edd-a26a-53f817d0d373",
+      "name": "FINAL — Hero Shot",
+      "description": "Brushed aluminum, burgundy buttons, hand-held, studio lighting — hero render",
+      "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/d8e0c42c-2bc5-4edd-a26a-53f817d0d373",
+      "step": "design_final", "view": "hero", "visuallyVerified": true, "final": true
+    },
+    {
+      "id": "24b0147d-72fe-4d58-8001-44fe189f782a",
+      "name": "FINAL — Side Profile",
+      "description": "Side profile showing slim form factor",
+      "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/24b0147d-72fe-4d58-8001-44fe189f782a",
+      "step": "design_final", "view": "side", "visuallyVerified": true, "final": true
+    },
+    {
+      "id": "e9f566f8-8a6e-4a5b-8b78-3c4a7b703048",
+      "name": "FINAL — Rear View",
+      "description": "Brushed metal back, speaker grilles",
+      "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/e9f566f8-8a6e-4a5b-8b78-3c4a7b703048",
+      "step": "design_final", "view": "rear", "visuallyVerified": true, "final": true
     }
   ]
 }
