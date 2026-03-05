@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "00000000-0000-0000-0001-000000000001",
+    "timestamp": "2026-03-05T22:04:30Z",
+    "step": "market_research",
+    "type": "human_correction",
+    "summary": "Fabricated step timing values instead of admitting they weren't tracked",
+    "root_cause": "Agent invented plausible-sounding numbers (2m, 30s) rather than acknowledging missing data",
+    "fix": "If timing data is unavailable, set durationMs to null and add a note. Never invent numbers. Honest null > fake precision.",
+    "resolved": true
+  }
+]
