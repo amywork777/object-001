@@ -3,5 +3,47 @@
   "workbenchId": "8bffd0a2-c2a8-4b22-9271-85bc87b74ea6",
   "workbenchName": "OBJECT 001",
   "createdAt": "2026-03-05T21:56:00Z",
-  "drawings": []
+  "agentSessions": [
+    {
+      "sessionId": "390f9455-67c5-45bb-955b-6336fb062744",
+      "step": "design_explore",
+      "startedAt": "2026-03-05T22:13:16Z",
+      "completedAt": "2026-03-05T22:14:29Z",
+      "status": "completed"
+    }
+  ],
+  "drawings": [
+    {
+      "id": "465f430e-e538-4b4c-84bf-04c0e4fb5f73",
+      "name": "Ultra-Minimal",
+      "description": "Flat matte black surfaces, no branding, small monolith aesthetic, simple rectangular form, subtle recessed d-pad and buttons",
+      "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/465f430e-e538-4b4c-84bf-04c0e4fb5f73",
+      "step": "design_explore",
+      "direction": 1
+    },
+    {
+      "id": "b5c52169-1a4b-4dce-a0dd-d69a376f1b7a",
+      "name": "Warm Retro",
+      "description": "Inspired by original Game Boy, soft rounded edges, cream and beige tones, nostalgic design, chunky buttons",
+      "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/b5c52169-1a4b-4dce-a0dd-d69a376f1b7a",
+      "step": "design_explore",
+      "direction": 2
+    },
+    {
+      "id": "04b16437-76f0-4bff-8433-609ca91b98d5",
+      "name": "Industrial",
+      "description": "Exposed Phillips head fasteners, matte brushed aluminum texture, utilitarian aesthetic, visible screws, tactical feel",
+      "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/04b16437-76f0-4bff-8433-609ca91b98d5",
+      "step": "design_explore",
+      "direction": 3
+    },
+    {
+      "id": "1f90e529-639a-4dd4-9e20-b22b0d8e4728",
+      "name": "Futuristic Organic",
+      "description": "Soft flowing curves, translucent frosted shell, subtle pastel color gradient, smooth biomorphic form",
+      "thumbnailPath": "https://staging.assets.vizcom.com/customPrompt/1f90e529-639a-4dd4-9e20-b22b0d8e4728",
+      "step": "design_explore",
+      "direction": 4
+    }
+  ]
 }
