@@ -23,47 +23,7 @@ All project state is stored in `{baseDir}/../../state/` as JSON and Markdown fil
 
 ### Reading State
 
-Before any action, read `{baseDir}/../../state/project.json` to determine the current step. The structure is:
-
-```json
-{
-  "currentStep": "market_research",
-  "steps": [
-    "market_research",
-    "product_decision",
-    "design_explore",
-    "design_refine",
-    "design_final",
-    "engineering",
-    "find_manufacturers",
-    "human_approval",
-    "manufacture",
-    "ship_launch",
-    "complete"
-  ],
-  "iterations": {
-    "productPivots": 0,
-    "designRefinements": 0,
-    "manufacturerSwitches": 0
-  },
-  "maxIterations": {
-    "productPivots": 2,
-    "designRefinements": 3,
-    "manufacturerSwitches": 2
-  },
-  "artifacts": {
-    "researchReport": false,
-    "productDecision": false,
-    "designScores": false,
-    "selectedDesign": null,
-    "engineeringSpec": false,
-    "bom": false,
-    "manufacturerQuotes": false,
-    "spendProposal": false,
-    "approvalStatus": null
-  }
-}
-```
+Before any action, read `{baseDir}/../../state/project.json` to determine the current step.
 
 ### Updating State
 
@@ -89,15 +49,180 @@ Append every decision to `{baseDir}/../../state/ledger.json` (array of entries):
 
 ## Vizcom Integration
 
-Use the Vizcom MCP tools for design work:
-1. `list_teams` → get your team
-2. `create_workbench` → create a workbench for the project
-3. `create_drawing` → create drawings within the workbench
-4. `modify_image` / `render_sketch` → generate and refine designs
-5. `export_image` → export final renders
-6. `get_generation_status` → check render progress
+Vizcom is accessed via its **GraphQL API** at the dev environment. No MCP needed.
 
-Save render metadata to `{baseDir}/../../state/design-scores.json`.
+### Endpoint & Auth
+
+```
+API: https://pr-5256.dev.vizcom.com/api/v1/graphql
+Login: admin@test.com / test
+```
+
+### Step 1: Authenticate
+
+```graphql
+mutation {
+  login(input: { email: "admin@test.com", password: "test" }) {
+    authToken
+  }
+}
+```
+
+Store the token and pass it as `Authorization: Bearer <token>` on all subsequent requests.
+
+### Step 2: Create a new workbench for this project
+
+Always create a **fresh workbench** for OBJECT 001. Never reuse existing files.
+
+First get the team/folder to create it in:
+
+```graphql
+{
+  currentUser {
+    organizations {
+      nodes {
+        teams {
+          nodes {
+            id
+            name
+            rootFolder { id }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Then create the workbench:
+
+```graphql
+mutation {
+  createWorkbench(input: {
+    folderId: "<rootFolderId>"
+    name: "OBJECT 001"
+  }) {
+    workbench { id name }
+  }
+}
+```
+
+Save the workbench ID to `{baseDir}/../../state/vizcom.json`.
+
+### Step 3: Run the agentic chat bar
+
+This is the core of design generation. The `startAgentSession` mutation replicates
+exactly what the chat bar does in the Vizcom UI.
+
+```graphql
+mutation StartAgent($input: StartAgentSessionInput!) {
+  startAgentSession(input: $input) {
+    sessionId
+    status
+    modelId
+  }
+}
+```
+
+Variables:
+```json
+{
+  "input": {
+    "workbenchId": "<workbenchId>",
+    "prompt": "<your design prompt>",
+    "cameraPosition": { "x": 0, "y": 0, "zoom": 1 },
+    "agentVersion": "DEV_DESIGNER_V1"
+  }
+}
+```
+
+### Step 4: Poll for completion
+
+```graphql
+{
+  agentSession(id: "<sessionId>") {
+    id
+    status
+    metadata
+    steps {
+      nodes {
+        id
+        seq
+        type
+        status
+        input
+        output
+        artifacts {
+          nodes {
+            id
+            kind
+            payload
+            toolName
+            elementId
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Poll every 3–5 seconds until `status == "completed"` or `status == "failed"`.
+
+### Step 5: Retrieve generated images
+
+Generated drawings appear in the workbench with thumbnail URLs:
+
+```graphql
+{
+  workbench(id: "<workbenchId>") {
+    drawings {
+      nodes {
+        id
+        name
+        thumbnailPath
+      }
+    }
+  }
+}
+```
+
+Thumbnail URLs follow the pattern:
+`https://staging.assets.vizcom.com/customPrompt/<drawingId>`
+
+Save drawing IDs and thumbnail URLs to `{baseDir}/../../state/design-scores.json`.
+
+### Available Agent Actions
+
+The agent (`DEV_DESIGNER_V1`) can autonomously use:
+- `TEXT_TO_IMAGE` — generate from text prompt
+- `RENDER` — render a sketch into a photorealistic image
+- `MODIFY_IMAGE` — modify an existing image
+
+The agent decides which to use based on your prompt.
+
+### Design Step Prompts
+
+**design_explore** — Generate 4 distinct design directions:
+```
+Design a compact handheld gaming device. Generate 4 distinct design directions:
+1. Minimal/modern - clean lines, matte surfaces
+2. Ergonomic/curved - comfortable grip, rounded edges
+3. Retro-inspired - classic gaming aesthetic, chunky buttons
+4. Cyberpunk/bold - aggressive angles, accent lighting details
+```
+
+**design_refine** — Iterate on a specific design:
+```
+Refine this design: [description]. Make it more [direction].
+Generate 3 variations exploring [specific aspect].
+```
+
+**design_final** — Lock in the chosen design:
+```
+This is the final design direction. Generate a clean hero render,
+a side profile view, and a top-down view suitable for manufacturing reference.
+```
 
 ## Human Approval Flow
 
