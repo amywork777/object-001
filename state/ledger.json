@@ -214,5 +214,29 @@
         "Final mechanical assembly"
       ]
     }
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000016",
+    "timestamp": "2026-03-05T23:28:15Z",
+    "step": "find_manufacturers",
+    "actor": "agent",
+    "action": "step_complete",
+    "summary": "find_manufacturers complete. Vendors sourced for CNC shell (PCBWay), buttons (Fictiv), PCB+PCBA (JLCPCB), compute module (Radxa CM3/RK3566), display (Waveshare), battery (Aliexpress), laser engraving (SendCutSend). BOM export CSV generated from Vizcom GraphQL API. Total 20-unit estimate: $3,840\u2013$4,224 incl. contingency.",
+    "artifacts": [
+      "state/manufacturers.md",
+      "state/spend-proposal.md",
+      "state/bom-export.csv"
+    ]
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000017",
+    "timestamp": "2026-03-05T23:29:37Z",
+    "step": "human_approval",
+    "actor": "agent",
+    "action": "step_start",
+    "summary": "human_approval step started. Spend proposal submitted. Awaiting Amy's approve/deny decision before manufacture begins.",
+    "artifacts": [
+      "state/spend-proposal.md"
+    ]
   }
 ]
