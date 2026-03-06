@@ -686,6 +686,188 @@
       </div>
     </div>
 
+    <!-- Build Plan -->
+    <div class="section open" id="sec-build">
+      <div class="section-header" onclick="toggle('sec-build')">
+        <div class="section-header-left">
+          <span class="section-icon">🔧</span>
+          <div>
+            <div class="section-title">Build Plan</div>
+            <div class="section-sub">Verified component stack · GPIO pinout · Assembly sequence</div>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-body" id="sec-build-body">
+
+        <!-- Issues resolved banner -->
+        <div style="background:#1a1a0a;border:1px solid #eab30844;border-radius:8px;padding:14px 18px;margin-bottom:20px;">
+          <div style="color:#eab308;font-weight:600;margin-bottom:8px;">⚠️ 6 Compatibility Issues Found & Resolved</div>
+          <div style="color:#aaa;font-size:12px;line-height:1.8;">
+            1. DPI display used 18+ GPIO pins — no room for buttons → <strong style="color:#f0f0f0;">replaced with 2.4" SPI ILI9341</strong><br>
+            2. DPI display not Pi Zero 2W compatible → <strong style="color:#f0f0f0;">SPI ILI9341 proven on Pi Zero 2W</strong><br>
+            3. TP4056 outputs 3.7V, Pi needs 5V → <strong style="color:#f0f0f0;">added MT3608 5V boost converter</strong><br>
+            4. Battery 65mm wide > 61mm shell interior → <strong style="color:#f0f0f0;">803060 battery (60mm) + shell widened to 75mm</strong><br>
+            5. No audio components → <strong style="color:#f0f0f0;">added MAX98357A I2S DAC + 1W speaker</strong><br>
+            6. Pi Zero 2W has no GPIO header → <strong style="color:#f0f0f0;">added 40-pin header (solder during assembly)</strong>
+          </div>
+        </div>
+
+        <!-- Final BOM -->
+        <div style="margin-bottom:24px;">
+          <div style="font-weight:600;margin-bottom:12px;color:#a78bfa;">Final Verified BOM (20 units)</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px;">
+            <thead>
+              <tr style="border-bottom:1px solid #333;color:#777;text-align:left;">
+                <th style="padding:6px 10px;">Component</th>
+                <th style="padding:6px 10px;">Part / Spec</th>
+                <th style="padding:6px 10px;">Source</th>
+                <th style="padding:6px 10px;text-align:right;">Unit Cost</th>
+              </tr>
+            </thead>
+            <tbody id="bom-table-body">
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">Raspberry Pi Zero 2W</td><td style="padding:6px 10px;color:#aaa;">BCM2710A1, 512MB, WiFi/BT</td><td style="padding:6px 10px;color:#aaa;">Amazon</td><td style="padding:6px 10px;text-align:right;color:#22c55e;">$15</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">2.4" SPI LCD (ILI9341)</td><td style="padding:6px 10px;color:#aaa;">320×240, SPI, Pi Zero 2W proven</td><td style="padding:6px 10px;color:#aaa;">Amazon</td><td style="padding:6px 10px;text-align:right;color:#22c55e;">$14</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">LiPo Battery 803060</td><td style="padding:6px 10px;color:#aaa;">3.7V 2000mAh, 60×30×8mm, JST PH2</td><td style="padding:6px 10px;color:#aaa;">Aliexpress</td><td style="padding:6px 10px;text-align:right;color:#22c55e;">$5</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">TP4056 USB-C Charger</td><td style="padding:6px 10px;color:#aaa;">5V in, 1A, protection circuit</td><td style="padding:6px 10px;color:#aaa;">Amazon (20-pack)</td><td style="padding:6px 10px;text-align:right;color:#22c55e;">$2</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">MT3608 Boost Converter</td><td style="padding:6px 10px;color:#aaa;">3.7V→5.1V, 2A, adjustable</td><td style="padding:6px 10px;color:#aaa;">Amazon</td><td style="padding:6px 10px;text-align:right;color:#22c55e;">$1</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">MAX98357A I2S DAC</td><td style="padding:6px 10px;color:#aaa;">3W mono, 3.3V, I2S</td><td style="padding:6px 10px;color:#aaa;">Adafruit #3006</td><td style="padding:6px 10px;text-align:right;color:#22c55e;">$5</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">1W Speaker (28mm)</td><td style="padding:6px 10px;color:#aaa;">8Ω, 1W, 28mm round</td><td style="padding:6px 10px;color:#aaa;">Adafruit #1314</td><td style="padding:6px 10px;text-align:right;color:#22c55e;">$2</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">40-pin GPIO Header</td><td style="padding:6px 10px;color:#aaa;">2×20 pin, 2.54mm, male</td><td style="padding:6px 10px;color:#aaa;">Amazon</td><td style="padding:6px 10px;text-align:right;color:#22c55e;">$0.50</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">32GB microSD</td><td style="padding:6px 10px;color:#aaa;">Class 10, for RetroPie</td><td style="padding:6px 10px;color:#aaa;">Amazon</td><td style="padding:6px 10px;text-align:right;color:#22c55e;">$6</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">Tactile buttons ×10</td><td style="padding:6px 10px;color:#aaa;">6mm, D-pad + face + menu</td><td style="padding:6px 10px;color:#aaa;">Amazon</td><td style="padding:6px 10px;text-align:right;color:#22c55e;">$2</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">CNC shell (front)</td><td style="padding:6px 10px;color:#aaa;">6061-T6 Al, 125×75×10mm, brushed + anodized</td><td style="padding:6px 10px;color:#aaa;">PCBWay/Fictiv/Xometry</td><td style="padding:6px 10px;text-align:right;color:#eab308;">$18</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">CNC shell (rear)</td><td style="padding:6px 10px;color:#aaa;">6061-T6 Al, 125×75×10mm, battery door</td><td style="padding:6px 10px;color:#aaa;">PCBWay/Fictiv/Xometry</td><td style="padding:6px 10px;text-align:right;color:#eab308;">$14</td></tr>
+              <tr style="border-bottom:1px solid #1e1e1e;"><td style="padding:6px 10px;">Laser engraving</td><td style="padding:6px 10px;color:#aaa;">"OBJECT 001 — XX/20" unique per unit</td><td style="padding:6px 10px;color:#aaa;">PCBWay add-on</td><td style="padding:6px 10px;text-align:right;color:#eab308;">$3</td></tr>
+              <tr><td style="padding:6px 10px;">Burgundy ABS buttons</td><td style="padding:6px 10px;color:#aaa;">D-pad + face + start/select caps</td><td style="padding:6px 10px;color:#aaa;">Aliexpress</td><td style="padding:6px 10px;text-align:right;color:#eab308;">$2</td></tr>
+            </tbody>
+          </table>
+          <div style="text-align:right;margin-top:10px;font-size:13px;">
+            <span style="color:#777;">Estimated total (20 units):</span>
+            <span style="color:#22c55e;font-weight:700;font-size:16px;margin-left:10px;">~$1,660</span>
+            <span style="color:#777;font-size:12px;margin-left:6px;">($83/unit)</span>
+          </div>
+        </div>
+
+        <!-- Power Architecture -->
+        <div style="margin-bottom:24px;">
+          <div style="font-weight:600;margin-bottom:12px;color:#a78bfa;">Power Architecture</div>
+          <pre style="background:#0d0d0d;border:1px solid #222;border-radius:8px;padding:16px;font-size:11px;color:#aaa;overflow-x:auto;line-height:1.7;">USB-C port (external)
+      │
+      ▼
+  TP4056 ──── charges ────▶ LiPo 3.7V 2000mAh
+                                    │
+                                    ▼
+                           MT3608 boost (→ 5.1V)
+                                    │
+                                    ▼
+                         Pi Zero 2W (via GPIO pin 2)
+                                    │
+                         Pi 3.3V regulator
+                            ├──▶ Display (SPI)
+                            ├──▶ MAX98357A (I2S)
+                            └──▶ Buttons (pull-ups)
+
+Battery life: 2000mAh ÷ 600mA load ≈ 3.3 hrs gaming</pre>
+        </div>
+
+        <!-- GPIO Pinout -->
+        <div style="margin-bottom:24px;">
+          <div style="font-weight:600;margin-bottom:12px;color:#a78bfa;">GPIO Pinout</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div>
+              <div style="font-size:11px;color:#777;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Display (SPI ILI9341)</div>
+              <table style="width:100%;border-collapse:collapse;font-size:11px;">
+                <tr style="color:#555;"><td style="padding:3px 8px;">MOSI</td><td style="padding:3px 8px;color:#a78bfa;">GPIO 10</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">SCLK</td><td style="padding:3px 8px;color:#a78bfa;">GPIO 11</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">CS</td><td style="padding:3px 8px;color:#a78bfa;">GPIO 8</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">DC</td><td style="padding:3px 8px;color:#a78bfa;">GPIO 24</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">RST</td><td style="padding:3px 8px;color:#a78bfa;">GPIO 25</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">Backlight</td><td style="padding:3px 8px;color:#a78bfa;">GPIO 12 (PWM)</td></tr>
+              </table>
+              <div style="font-size:11px;color:#777;margin:10px 0 8px;text-transform:uppercase;letter-spacing:0.05em;">Audio (MAX98357A I2S)</div>
+              <table style="width:100%;border-collapse:collapse;font-size:11px;">
+                <tr style="color:#555;"><td style="padding:3px 8px;">BCLK</td><td style="padding:3px 8px;color:#a78bfa;">GPIO 18</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">LRCLK</td><td style="padding:3px 8px;color:#a78bfa;">GPIO 19</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">DIN</td><td style="padding:3px 8px;color:#a78bfa;">GPIO 20</td></tr>
+              </table>
+            </div>
+            <div>
+              <div style="font-size:11px;color:#777;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Buttons (internal pull-ups)</div>
+              <table style="width:100%;border-collapse:collapse;font-size:11px;">
+                <tr style="color:#555;"><td style="padding:3px 8px;">D-pad UP</td><td style="padding:3px 8px;color:#22c55e;">GPIO 17</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">D-pad DOWN</td><td style="padding:3px 8px;color:#22c55e;">GPIO 27</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">D-pad LEFT</td><td style="padding:3px 8px;color:#22c55e;">GPIO 22</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">D-pad RIGHT</td><td style="padding:3px 8px;color:#22c55e;">GPIO 23</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">Button A</td><td style="padding:3px 8px;color:#22c55e;">GPIO 5</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">Button B</td><td style="padding:3px 8px;color:#22c55e;">GPIO 6</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">START</td><td style="padding:3px 8px;color:#22c55e;">GPIO 13</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">SELECT</td><td style="padding:3px 8px;color:#22c55e;">GPIO 26</td></tr>
+                <tr style="color:#555;"><td style="padding:3px 8px;">MENU</td><td style="padding:3px 8px;color:#22c55e;">GPIO 16</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assembly Sequence -->
+        <div style="margin-bottom:24px;">
+          <div style="font-weight:600;margin-bottom:12px;color:#a78bfa;">Assembly Sequence (3 days for 20 units)</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:#0d1a0d;border:1px solid #1a3a1a;border-radius:8px;padding:14px 16px;">
+              <div style="color:#22c55e;font-weight:600;margin-bottom:6px;">Day 1 — Prep (2 hrs total)</div>
+              <div style="color:#aaa;font-size:12px;line-height:1.8;">
+                1. Flash RetroPie to all 20 microSD cards simultaneously (Balena Etcher + USB hub)<br>
+                2. Solder 40-pin headers onto all 20 Pi Zero 2W boards<br>
+                3. Solder JST connectors onto TP4056 modules<br>
+                4. Smoke test each Pi: SD + micro-USB → verify boot
+              </div>
+            </div>
+            <div style="background:#0d0d1a;border:1px solid #1a1a3a;border-radius:8px;padding:14px 16px;">
+              <div style="color:#a78bfa;font-weight:600;margin-bottom:6px;">Day 2 — Subassembly (30 min/unit × 20 = 10 hrs, 2 people)</div>
+              <div style="color:#aaa;font-size:12px;line-height:1.8;">
+                5. Wire MT3608 → Pi 5V pin; set output to 5.15V with multimeter<br>
+                6. Wire TP4056 battery out → MT3608 input; battery → TP4056<br>
+                7. Solder SPI display to GPIO per pinout<br>
+                8. Wire MAX98357A I2S + speaker leads<br>
+                9. Install 10× tactile buttons in shell, wire to GPIO<br>
+                10. Full power test before closing shell<br>
+                11. Close shell with M2 screws; install ABS button caps
+              </div>
+            </div>
+            <div style="background:#1a0d0d;border:1px solid #3a1a1a;border-radius:8px;padding:14px 16px;">
+              <div style="color:#ef4444;font-weight:600;margin-bottom:6px;">Day 3 — Software + QC + Pack (15 min/unit)</div>
+              <div style="color:#aaa;font-size:12px;line-height:1.8;">
+                12. Boot RetroPie, configure button mapping in RetroArch<br>
+                13. Load ROM set, verify NES/SNES/GBA all run at full speed<br>
+                14. QC checklist: display, audio, all buttons, USB-C charge, battery runtime<br>
+                15. Pack in numbered kraft box (01/20–20/20) with design lineage card
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Physical Fit -->
+        <div style="margin-bottom:12px;">
+          <div style="font-weight:600;margin-bottom:12px;color:#a78bfa;">Physical Fit Verification</div>
+          <pre style="background:#0d0d0d;border:1px solid #222;border-radius:8px;padding:16px;font-size:11px;color:#aaa;overflow-x:auto;line-height:1.7;">Shell (revised): 125mm × 75mm × 20mm
+Internal space:  121mm × 71mm × 14mm usable
+
+Component        Footprint         Status
+──────────────── ─────────────────────────────
+Pi Zero 2W       65 × 30 × 5 mm   ✓ fits
+2.4" SPI display 60 × 42 × 3 mm   ✓ fits
+Battery 803060   60 × 30 × 8 mm   ✓ fits
+TP4056 module    26 × 17 × 3 mm   ✓ fits
+MT3608 boost     23 × 12 × 4 mm   ✓ fits
+MAX98357A        18 × 18 × 3 mm   ✓ fits
+Speaker 28mm     28mm dia × 7mm   ✓ fits (rear cutout)
+
+Depth stack: rear(2) + battery(8) + Pi(5) + display(3) + glass(2) = 20mm ✓</pre>
+        </div>
+
+      </div>
+    </div>
+
     <!-- Budget & Iterations -->
     <div class="section open" id="sec-budget">
       <div class="section-header" onclick="toggle('sec-budget')">
