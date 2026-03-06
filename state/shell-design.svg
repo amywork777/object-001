@@ -1,0 +1,204 @@
+<svg width="960" height="620" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="brushed" width="2" height="3" patternUnits="userSpaceOnUse">
+      <rect width="2" height="3" fill="#c4c4bc"/>
+      <line x1="0" y1="0.5" x2="2" y2="0.5" stroke="#d8d8d0" stroke-width="0.4"/>
+      <line x1="0" y1="1.5" x2="2" y2="1.5" stroke="#b8b8b0" stroke-width="0.3"/>
+      <line x1="0" y1="2.5" x2="2" y2="2.5" stroke="#d0d0c8" stroke-width="0.2"/>
+    </pattern>
+    <linearGradient id="shellEdge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e0e0d8"/>
+      <stop offset="30%" stop-color="#c8c8c0"/>
+      <stop offset="100%" stop-color="#a0a098"/>
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0a0a18"/>
+    </linearGradient>
+    <linearGradient id="btnBurg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7a1818"/>
+      <stop offset="100%" stop-color="#4a0a0a"/>
+    </linearGradient>
+    <filter id="shellShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <clipPath id="shellClip">
+      <rect x="124" y="82" width="608" height="296" rx="40" ry="40"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="620" fill="#0d0d0d"/>
+
+  <!-- Title -->
+  <text x="480" y="36" text-anchor="middle" font-family="'Courier New', monospace" font-size="13" fill="#aaa" letter-spacing="4">OBJECT 001 — SHELL-001 — FRONT FACE</text>
+  <text x="480" y="52" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#555" letter-spacing="2">REV A · 2026-03-06 · SCALE 4:1 · ALL DIMENSIONS IN mm</text>
+  <line x1="80" y1="62" x2="880" y2="62" stroke="#222" stroke-width="1"/>
+
+  <!-- ─── SHELL BODY ─── -->
+  <rect x="124" y="82" width="608" height="296" rx="40" ry="40" fill="url(#shellEdge)" stroke="#666" stroke-width="2" filter="url(#shellShadow)"/>
+  <!-- Brushed texture -->
+  <rect x="124" y="82" width="608" height="296" rx="40" ry="40" fill="url(#brushed)" opacity="0.7" clip-path="url(#shellClip)"/>
+  <!-- Subtle inner bevel -->
+  <rect x="130" y="88" width="596" height="284" rx="36" ry="36" fill="none" stroke="#e8e8e0" stroke-width="0.6" opacity="0.4"/>
+
+  <!-- ─── SHOULDER BUTTONS ─── (top edge tabs) -->
+  <rect x="180" y="66" width="104" height="20" rx="5" fill="#c0c0b8" stroke="#888" stroke-width="1.5"/>
+  <rect x="183" y="69" width="98" height="14" rx="4" fill="none" stroke="#e0e0d8" stroke-width="0.5" opacity="0.5"/>
+  <text x="232" y="80" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#444" font-weight="bold">L</text>
+
+  <rect x="676" y="66" width="104" height="20" rx="5" fill="#c0c0b8" stroke="#888" stroke-width="1.5"/>
+  <rect x="679" y="69" width="98" height="14" rx="4" fill="none" stroke="#e0e0d8" stroke-width="0.5" opacity="0.5"/>
+  <text x="728" y="80" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#444" font-weight="bold">R</text>
+
+  <!-- ─── DISPLAY WINDOW ─── -->
+  <!-- Display cutout (45mm from left = 180px, 9.5mm from top = 38px) -->
+  <rect x="304" y="120" width="288" height="220" rx="3" fill="url(#screenGrad)" stroke="#2a2a3a" stroke-width="1.5"/>
+  <!-- Screen reflection -->
+  <rect x="304" y="120" width="288" height="35" rx="3" fill="white" opacity="0.04"/>
+  <!-- Pixel grid hint -->
+  <rect x="308" y="124" width="280" height="212" rx="2" fill="none" stroke="#1e1e30" stroke-width="0.8"/>
+  <!-- Display label -->
+  <text x="448" y="226" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#333">3.5" IPS</text>
+  <text x="448" y="240" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#333">640×480</text>
+
+  <!-- ─── D-PAD ─── (center at 252, 258) -->
+  <!-- Horizontal arm -->
+  <rect x="200" y="240" width="104" height="36" rx="4" fill="#181818" stroke="#2a2a2a" stroke-width="1.5"/>
+  <!-- Vertical arm -->
+  <rect x="234" y="206" width="36" height="104" rx="4" fill="#181818" stroke="#2a2a2a" stroke-width="1.5"/>
+  <!-- Center fill (overlap) -->
+  <rect x="234" y="240" width="36" height="36" fill="#181818"/>
+  <!-- D-pad center pip -->
+  <circle cx="252" cy="258" r="5" fill="#222" stroke="#333" stroke-width="1"/>
+  <!-- Direction labels -->
+  <text x="214" y="262" text-anchor="middle" font-family="Arial" font-size="9" fill="#3a3a3a">◀</text>
+  <text x="290" y="262" text-anchor="middle" font-family="Arial" font-size="9" fill="#3a3a3a">▶</text>
+  <text x="252" y="220" text-anchor="middle" font-family="Arial" font-size="9" fill="#3a3a3a">▲</text>
+  <text x="252" y="334" text-anchor="middle" font-family="Arial" font-size="9" fill="#3a3a3a">▼</text>
+
+  <!-- ─── FACE BUTTONS A/B/X/Y ─── (cluster center 133mm from left = 532px + 124 = 656, 40mm from top = 160px + 82 = 242) -->
+  <!-- X (top) — 133mm, 28mm from top = 532+124, 112+82 = (656,194) -->
+  <circle cx="656" cy="194" r="17" fill="url(#btnBurg)" stroke="#3a0808" stroke-width="2"/>
+  <circle cx="656" cy="194" r="12" fill="none" stroke="#8a2020" stroke-width="0.5" opacity="0.5"/>
+  <text x="656" y="199" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#ff9090" font-weight="bold">X</text>
+
+  <!-- B (left) — 121mm, 40mm = (484+124, 160+82) = (608, 242) -->
+  <circle cx="608" cy="242" r="17" fill="url(#btnBurg)" stroke="#3a0808" stroke-width="2"/>
+  <circle cx="608" cy="242" r="12" fill="none" stroke="#8a2020" stroke-width="0.5" opacity="0.5"/>
+  <text x="608" y="247" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#ff9090" font-weight="bold">B</text>
+
+  <!-- A (right) — 145mm, 40mm = (580+124, 160+82) = (704, 242) -->
+  <circle cx="704" cy="242" r="17" fill="url(#btnBurg)" stroke="#3a0808" stroke-width="2"/>
+  <circle cx="704" cy="242" r="12" fill="none" stroke="#8a2020" stroke-width="0.5" opacity="0.5"/>
+  <text x="704" y="247" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#ff9090" font-weight="bold">A</text>
+
+  <!-- Y (bottom) — 133mm, 52mm = (532+124, 208+82) = (656, 290) -->
+  <circle cx="656" cy="290" r="17" fill="url(#btnBurg)" stroke="#3a0808" stroke-width="2"/>
+  <circle cx="656" cy="290" r="12" fill="none" stroke="#8a2020" stroke-width="0.5" opacity="0.5"/>
+  <text x="656" y="295" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#ff9090" font-weight="bold">Y</text>
+
+  <!-- ─── START / SELECT / MENU ─── -->
+  <!-- Menu — 76mm, 62mm = (304+124, 248+82) = (428, 330) -->
+  <circle cx="428" cy="330" r="10" fill="#1c1c1c" stroke="#383838" stroke-width="1.5"/>
+  <text x="428" y="348" text-anchor="middle" font-family="'Courier New', monospace" font-size="7" fill="#555">MENU</text>
+
+  <!-- Start — 89mm, 62mm = (356+124, 248+82) = (480, 330) -->
+  <circle cx="480" cy="330" r="13" fill="#1c1c1c" stroke="#404040" stroke-width="1.5"/>
+  <text x="480" y="349" text-anchor="middle" font-family="'Courier New', monospace" font-size="7" fill="#666">START</text>
+
+  <!-- Select — 103mm, 62mm = (412+124, 248+82) = (536, 330) -->
+  <circle cx="536" cy="330" r="13" fill="#1c1c1c" stroke="#404040" stroke-width="1.5"/>
+  <text x="536" y="349" text-anchor="middle" font-family="'Courier New', monospace" font-size="7" fill="#666">SEL</text>
+
+  <!-- ─── TOP EDGE CONTROLS ─── -->
+  <!-- Vol- (70mm from left = 280+124 = 404, on top edge y=82) -->
+  <circle cx="404" cy="82" r="7" fill="#b8b8b0" stroke="#999" stroke-width="1"/>
+  <text x="404" y="73" text-anchor="middle" font-family="'Courier New', monospace" font-size="8" fill="#555">−</text>
+  <!-- Vol+ (82mm = 328+124 = 452) -->
+  <circle cx="452" cy="82" r="7" fill="#b8b8b0" stroke="#999" stroke-width="1"/>
+  <text x="452" y="73" text-anchor="middle" font-family="'Courier New', monospace" font-size="8" fill="#555">+</text>
+  <!-- Power (148mm = 592+124 = 716) -->
+  <circle cx="716" cy="82" r="9" fill="#a0a098" stroke="#888" stroke-width="1.5"/>
+  <text x="716" y="73" text-anchor="middle" font-family="'Courier New', monospace" font-size="8" fill="#555">⏻</text>
+
+  <!-- ─── BOTTOM EDGE PORTS ─── -->
+  <!-- USB-C (76mm = 304+124 = 428, bottom y=378) -->
+  <rect x="410" y="374" width="36" height="8" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width="1"/>
+  <!-- Headphone (26mm = 104+124 = 228, r=5) -->
+  <circle cx="228" cy="378" r="7" fill="#0a0a0a" stroke="#3a3a3a" stroke-width="1"/>
+
+  <!-- Port labels -->
+  <text x="428" y="396" text-anchor="middle" font-family="'Courier New', monospace" font-size="8" fill="#444">USB-C</text>
+  <text x="228" y="396" text-anchor="middle" font-family="'Courier New', monospace" font-size="8" fill="#444">3.5mm</text>
+  <text x="716" y="96" text-anchor="middle" font-family="'Courier New', monospace" font-size="8" fill="#444">PWR</text>
+
+  <!-- ─── DIMENSION LINES ─── -->
+
+  <!-- Overall width: 152mm -->
+  <line x1="124" y1="440" x2="732" y2="440" stroke="#0088ff" stroke-width="1"/>
+  <line x1="124" y1="430" x2="124" y2="452" stroke="#0088ff" stroke-width="1"/>
+  <line x1="732" y1="430" x2="732" y2="452" stroke="#0088ff" stroke-width="1"/>
+  <line x1="124" y1="82" x2="124" y2="435" stroke="#0088ff" stroke-width="0.5" stroke-dasharray="4,3" opacity="0.4"/>
+  <line x1="732" y1="82" x2="732" y2="435" stroke="#0088ff" stroke-width="0.5" stroke-dasharray="4,3" opacity="0.4"/>
+  <text x="428" y="458" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#0088ff" font-weight="bold">152mm</text>
+
+  <!-- Overall height: 74mm -->
+  <line x1="820" y1="82" x2="820" y2="378" stroke="#0088ff" stroke-width="1"/>
+  <line x1="810" y1="82" x2="832" y2="82" stroke="#0088ff" stroke-width="1"/>
+  <line x1="810" y1="378" x2="832" y2="378" stroke="#0088ff" stroke-width="1"/>
+  <text x="845" y="234" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#0088ff" font-weight="bold" transform="rotate(90,845,234)">74mm</text>
+
+  <!-- Display width: 72mm -->
+  <line x1="304" y1="106" x2="592" y2="106" stroke="#44aaff" stroke-width="0.8"/>
+  <line x1="304" y1="99" x2="304" y2="113" stroke="#44aaff" stroke-width="0.8"/>
+  <line x1="592" y1="99" x2="592" y2="113" stroke="#44aaff" stroke-width="0.8"/>
+  <text x="448" y="100" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#44aaff">72mm</text>
+
+  <!-- Display left offset: 45mm -->
+  <line x1="124" y1="469" x2="304" y2="469" stroke="#2266aa" stroke-width="0.8"/>
+  <line x1="124" y1="463" x2="124" y2="475" stroke="#2266aa" stroke-width="0.8"/>
+  <line x1="304" y1="463" x2="304" y2="475" stroke="#2266aa" stroke-width="0.8"/>
+  <text x="214" y="482" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" fill="#2266aa">45mm</text>
+
+  <!-- D-pad offset: 32mm -->
+  <line x1="124" y1="408" x2="252" y2="408" stroke="#2266aa" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <text x="188" y="422" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" fill="#2266aa">32mm</text>
+
+  <!-- Corner radius callout -->
+  <text x="148" y="118" font-family="'Courier New', monospace" font-size="9" fill="#666">R10</text>
+  <path d="M 155 116 Q 164 96 184 90" fill="none" stroke="#555" stroke-width="0.8"/>
+
+  <!-- ─── SPEC CALLOUT BOXES ─── -->
+
+  <!-- Material box -->
+  <rect x="40" y="480" width="270" height="100" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="55" y="498" font-family="'Courier New', monospace" font-size="9" fill="#888">MATERIAL  6061-T6 ALUMINUM</text>
+  <text x="55" y="512" font-family="'Courier New', monospace" font-size="9" fill="#888">FINISH    BRUSHED 180-GRIT HORIZ.</text>
+  <text x="55" y="526" font-family="'Courier New', monospace" font-size="9" fill="#888">ANODIZE   TYPE II SILVER  10µm</text>
+  <text x="55" y="540" font-family="'Courier New', monospace" font-size="9" fill="#888">DEPTH     22mm  (F:10 / R:12)</text>
+  <text x="55" y="554" font-family="'Courier New', monospace" font-size="9" fill="#888">WEIGHT    ~90g per unit</text>
+  <text x="55" y="568" font-family="'Courier New', monospace" font-size="9" fill="#888">ENGRAVE   OBJECT 001 — XX/20 (REAR)</text>
+
+  <!-- Tolerance box -->
+  <rect x="340" y="480" width="270" height="100" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="355" y="498" font-family="'Courier New', monospace" font-size="9" fill="#888">GENERAL       ±0.1mm</text>
+  <text x="355" y="512" font-family="'Courier New', monospace" font-size="9" fill="#888">DISPLAY WIN   ±0.05mm</text>
+  <text x="355" y="526" font-family="'Courier New', monospace" font-size="9" fill="#888">BTN HOLES     ±0.1mm</text>
+  <text x="355" y="540" font-family="'Courier New', monospace" font-size="9" fill="#888">PORT CUTS     ±0.1mm</text>
+  <text x="355" y="554" font-family="'Courier New', monospace" font-size="9" fill="#888">SEAM GAP      ≤0.05mm</text>
+  <text x="355" y="568" font-family="'Courier New', monospace" font-size="9" fill="#888">FLATNESS      0.1mm</text>
+
+  <!-- Order box -->
+  <rect x="640" y="480" width="270" height="100" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="655" y="498" font-family="'Courier New', monospace" font-size="9" fill="#888">QTY         20 units total</text>
+  <text x="655" y="512" font-family="'Courier New', monospace" font-size="9" fill="#888">SAMPLE      1× (fit verify first)</text>
+  <text x="655" y="526" font-family="'Courier New', monospace" font-size="9" fill="#888">SHELL       2-PART: FRONT + REAR</text>
+  <text x="655" y="540" font-family="'Courier New', monospace" font-size="9" fill="#888">FASTENER    4× M2 COUNTERSUNK</text>
+  <text x="655" y="554" font-family="'Courier New', monospace" font-size="9" fill="#888">ALIGN       4× ⌀2mm LOCATING PINS</text>
+  <text x="655" y="568" font-family="'Courier New', monospace" font-size="9" fill="#888">INTERIOR    146×68×16mm CAVITY</text>
+
+  <!-- Footer line -->
+  <line x1="40" y1="603" x2="920" y2="603" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="480" y="614" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" fill="#333">OBJECT 001 · VIZ · SHELL-001-FRONT · REV A · 2026-03-06 · ⚠ PORT/BTN POSITIONS VERIFY ON SAMPLE UNIT</text>
+</svg>
