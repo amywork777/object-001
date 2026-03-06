@@ -1,227 +1,122 @@
-# OBJECT 001 — Build Plan v1
-_Authored: 2026-03-06T01:37:00Z_
-_Status: Pre-manufacture reference document_
+# OBJECT 001 — Build Plan v2
+_Revised: 2026-03-06T01:56:18Z_
+_Philosophy: Minimal assembly at door. No soldering. No wiring. No software setup._
 
 ---
 
-## ⚠️ Compatibility Issues Found & Resolved
+## Approach: Anbernic Shell Swap
 
-The original cart had 6 problems. All fixed in the revised BOM below.
+Buy 20× Anbernic RG35XX H units — fully working retro handhelds straight from the factory. Transplant the internals into custom CNC brushed aluminum shells. That's the entire build.
 
-| # | Issue | Fix |
-|---|-------|-----|
-| 1 | DPI display uses 18+ GPIO pins — not enough left for buttons | **Replace** with 2.4" SPI ILI9341 (uses 6 GPIO) |
-| 2 | DPI display not listed as Pi Zero 2W compatible | SPI ILI9341 is proven on Pi Zero 2W |
-| 3 | TP4056 outputs 3.7–4.2V, Pi Zero 2W needs 5V | **Add** MT3608 5V boost converter |
-| 4 | Battery (95×65mm) too wide for 65mm shell interior | **Replace** with 803060 60mm-wide cell; **widen shell to 75mm** |
-| 5 | No audio components | **Add** MAX98357A I2S DAC + 1W speaker |
-| 6 | Pi Zero 2W has no pre-soldered GPIO header | **Add** 2×20 pin header (solder during assembly) |
+**Assembly per unit: ~10 minutes, one screwdriver.**
 
 ---
 
-## Final Verified BOM (20 units)
+## Why Anbernic RG35XX H
 
-### Off-Shelf (Amazon/Adafruit)
+| Spec | Value |
+|------|-------|
+| Display | 3.5" IPS, **640×480** (exact spec match) |
+| SoC | Allwinner H700, quad-core A53 |
+| RAM | 1GB DDR3 |
+| Storage | microSD slot (user-replaceable) |
+| Battery | 3500mAh built-in, USB-C charging |
+| OS | Linux + RetroArch pre-loaded |
+| Dimensions | 155 × 70 × 20mm (internals ~145 × 63mm) |
+| Price | ~$55 shipped |
+| Community | JELOS / muOS / GarlicOS custom firmware |
 
-| Component | Part | Spec | Source | Qty (×20) | Unit Cost |
-|-----------|------|------|--------|-----------|-----------|
-| Compute | Raspberry Pi Zero 2W | BCM2710A1, 512MB, WiFi/BT | Amazon B09LH5SBPS | 20 | $15 |
-| Display | Waveshare 2.4" SPI LCD | ILI9341, 320×240, SPI | Amazon B074V7BXK5 | 20 | $14 |
-| Battery | 3.7V 2000mAh LiPo | 803060, 60×30×8mm, JST PH2 | Aliexpress | 20 | $5 |
-| Charger | TP4056 USB-C module | 5V in, 1A charge, protection | Amazon B0C3LB3JSZ | 20 (1 pack) | $2 |
-| Boost converter | MT3608 5V module | 2–24V in → 5V out, 2A | Amazon | 20 | $1 |
-| I2S DAC | MAX98357A breakout | 3W, I2S, 3.3V | Adafruit #3006 | 20 | $5 |
-| Speaker | 1W 8Ω mini speaker | 28mm round | Adafruit #1314 | 20 | $2 |
-| GPIO header | 2×20 pin 2.54mm | Male, for Pi Zero 2W | Amazon | 20 | $0.50 |
-| microSD | 32GB Class 10 | For RetroPie OS | Amazon | 20 | $6 |
-| Tactile buttons | 6mm tactile switch | 10 per unit (d-pad+face+menu) | Amazon (pack) | 200 | $0.20 |
-| Misc | Wires, resistors, standoffs | M2 screws, 10kΩ resistors | Amazon | 1 lot | $20 |
-
-**Cart subtotal (off-shelf): ~$960**
-
-### Custom (Quotes pending)
-
-| Component | Spec | Vendor | Est. Cost (×20) |
-|-----------|------|--------|-----------------|
-| CNC shell front | 6061-T6 Al, 125×75×10mm, brushed + anodized | PCBWay/Fictiv/Xometry | $350 |
-| CNC shell rear | 6061-T6 Al, 125×75×10mm, battery door | PCBWay/Fictiv/Xometry | $250 |
-| Laser engraving | "OBJECT 001 — XX/20" rear panel, unique per unit | PCBWay add-on | $60 |
-| Burgundy buttons | ABS, pre-colored, D-pad + 4 face + 2 small | Aliexpress | $40 |
-
-**Custom subtotal: ~$700**
-
-**Grand total: ~$1,660 for 20 units ($83/unit)**
+Plays: NES, SNES, GBA, GBC, PS1, N64, Neo Geo — out of the box.
 
 ---
 
-## Physical Fit Verification
+## Final BOM (20 units)
+
+| Line Item | Source | Qty | Unit | Total |
+|-----------|--------|-----|------|-------|
+| Anbernic RG35XX H | Amazon / AliExpress | 20 | $55 | $1,100 |
+| CNC 6061-T6 shell (front) | PCBWay / Fictiv / Xometry | 20 sets | $18 | $360 |
+| CNC 6061-T6 shell (rear) | PCBWay / Fictiv / Xometry | (included) | $14 | $280 |
+| Type II anodize + brushed finish | (included in CNC quote) | 20 | — | — |
+| Laser engraving "OBJECT 001 — XX/20" | PCBWay add-on | 20 | $3 | $60 |
+| Replacement burgundy button caps | Aliexpress | 1 lot | $40 | $40 |
+| M2 screw kit | Amazon | 1 | — | $10 |
+| Kraft numbered packaging (01–20) | Local print | 20 | $2 | $40 |
+| Shipping (vendors → SF) | — | — | — | $60 |
+| Contingency 10% | — | — | — | $195 |
+| **TOTAL** | | | | **$2,145** |
+
+---
+
+## Shell Design Constraints
+
+The CNC shell must be machined to fit the Anbernic RG35XX H internals exactly:
 
 ```
-Shell interior (125×75×18mm assembled, 2mm walls):
-  Internal: 121mm × 71mm × 14mm usable depth
-
-Component footprints:
-  Pi Zero 2W:          65mm × 30mm × 5mm  ✓ fits
-  2.4" SPI display:    60mm × 42mm × 3mm  ✓ fits  
-  Battery (803060):    60mm × 30mm × 8mm  ✓ fits
-  TP4056 module:       26mm × 17mm × 3mm  ✓ fits
-  MT3608 module:       23mm × 12mm × 4mm  ✓ fits
-  MAX98357A:           18mm × 18mm × 3mm  ✓ fits
-  Speaker (28mm):      28mm diameter       ✓ fits in rear cutout
-
-Layout (top view, front shell):
-  ┌─────────────────────────────────┐
-  │  [DISPLAY 60×42]   [speaker]   │
-  │                                 │
-  │  [D-PAD]    [Pi Zero 2W]  [AB] │
-  │            [battery below]      │
-  │  [SELECT]     [USB-C]  [START] │
-  └─────────────────────────────────┘
-  
-Depth stack (rear to front):
-  Rear shell (2mm) + battery (8mm) + PCB/Pi (5mm) + display (3mm) + front glass (2mm) = 20mm
-  → Spec shell to 20mm depth (revised from 15mm)
+Internal PCB footprint:  ~145mm × 63mm
+Display opening:         83mm × 63mm (3.5" IPS)
+Button cutouts:          Match RG35XX H layout exactly
+Screw posts:             4× M2, matching original positions
+USB-C port:              Right side, 9mm from bottom
+MicroSD slot:            Left side
+Volume/power buttons:    Top edge
+Shell depth:             21mm assembled (front 11mm + rear 10mm)
 ```
 
----
-
-## Power Architecture
-
-```
-USB-C port (external)
-      │
-      ▼
-  TP4056 module ──── charges ────▶ LiPo battery (3.7V 2000mAh)
-                                         │
-                                         ▼
-                                  MT3608 boost converter
-                                  (3.7–4.2V → 5.1V regulated)
-                                         │
-                                         ▼
-                              Pi Zero 2W (5V via GPIO pin 2)
-                                         │
-                              Pi 3.3V regulator
-                                         │
-                              ▼          ▼          ▼
-                           Display   MAX98357A   Buttons
-                           (3.3V)    (3.3V)      (pull-ups)
-```
-
-**Power notes:**
-- Pi Zero 2W is powered via 5V GPIO pin (pin 2), bypassing USB port
-- Max current draw at full load: Pi ~350mA + display ~50mA + audio ~200mA = ~600mA
-- MT3608 rated at 2A continuous — sufficient ✓
-- Battery life: 2000mAh / 600mA = ~3.3 hours gaming
+**The CNC vendor needs the Anbernic RG35XX H teardown dimensions.** These are publicly documented — send vendor the reference drawings from the RG35XX modding community or provide caliper measurements from a sample unit ordered first.
 
 ---
 
-## GPIO Pinout
+## Assembly Sequence (when parts arrive)
 
-| GPIO | BCM | Function | Connected To |
-|------|-----|----------|-------------|
-| 2 | — | 5V power | MT3608 output |
-| 6 | — | GND | Common ground |
-| 19 | 10 | SPI0_MOSI | Display MOSI |
-| 23 | 11 | SPI0_SCLK | Display CLK |
-| 24 | 8 | SPI0_CE0 | Display CS |
-| 11 | 17 | GPIO17 | D-pad UP |
-| 13 | 27 | GPIO27 | D-pad DOWN |
-| 15 | 22 | GPIO22 | D-pad LEFT |
-| 16 | 23 | GPIO23 | D-pad RIGHT |
-| 29 | 5 | GPIO5 | Button A |
-| 31 | 6 | GPIO6 | Button B |
-| 33 | 13 | GPIO13 | START |
-| 37 | 26 | GPIO26 | SELECT |
-| 36 | 16 | GPIO16 | MENU |
-| 18 | 24 | GPIO24 | Display DC |
-| 22 | 25 | GPIO25 | Display RST |
-| 32 | 12 | GPIO12 | Display backlight (PWM) |
-| 12 | 18 | PCM_CLK | I2S BCLK → MAX98357A |
-| 35 | 19 | PCM_FS | I2S LRCLK → MAX98357A |
-| 38 | 20 | PCM_DIN | I2S DATA → MAX98357A |
+**Before assembly day:**
+- Flash muOS or JELOS to 20× microSD cards (better UI than stock)
+- Insert SD cards into Anbernic units
+- Power on each — verify display, buttons, audio, charging all work
+- This is your QC baseline
 
-All button inputs use Pi's internal pull-up resistors (no external resistors needed).
+**Assembly day (10 min/unit × 20 = ~4 hours, 2 people):**
+
+1. Unscrew 4× M2 screws from Anbernic plastic shell
+2. Separate front and rear plastic halves
+3. Lift PCB + display + battery subassembly out
+4. Drop subassembly into CNC aluminum front shell
+5. Align display window, button cutouts, port openings
+6. Place CNC aluminum rear shell, screw 4× M2 screws
+7. Install burgundy ABS button caps (press-fit over existing tactile switches)
+8. Power on in new shell — verify everything works
+9. Pack in numbered kraft box (serial matches laser engraving)
+
+**No soldering. No wiring. No electronics.**
 
 ---
 
-## Assembly Sequence
+## What to Order First
 
-### Stage 1 — Prep Components (Day 1, ~2 hours for all 20)
-1. Flash RetroPie to all 20 microSD cards (use Balena Etcher, flash all simultaneously via USB hub)
-2. Solder 40-pin headers onto all 20 Pi Zero 2W boards
-3. Solder JST PH2.0 connector onto each TP4056 module (battery lead)
-4. Test each Pi: insert SD, connect micro-USB, verify boot
-
-### Stage 2 — Subassembly (Day 1–2, ~30 min per unit)
-5. Wire MT3608 → Pi GPIO 5V pin (pin 2) and GND (pin 6)
-6. Set MT3608 output to exactly 5.1V (adjust trim pot with multimeter)
-7. Wire TP4056 battery out → MT3608 input
-8. Wire battery to TP4056 battery terminals
-9. Solder display to Pi GPIO per pinout table above
-10. Wire MAX98357A I2S pins + speaker leads
-
-### Stage 3 — Button Matrix (Day 2, ~20 min per unit)
-11. Place 10 tactile switches in shell button positions
-12. Wire each to GPIO per pinout table (common GND rail)
-13. Install burgundy ABS button caps over tactile switches
-
-### Stage 4 — Shell Integration (Day 2, ~20 min per unit)
-14. Mount display into front shell window (adhesive foam tape seal)
-15. Secure Pi + power board stack with M2 standoffs
-16. Lay battery flat in rear of shell
-17. Route USB-C charging port through shell cutout
-18. Test full power cycle before closing shell
-19. Close shell with M2 screws (4× corners)
-
-### Stage 5 — Software + QC (Day 3, ~15 min per unit)
-20. Boot RetroPie, configure button mapping (runcommand + retroarch)
-21. Load sample ROM set (verify NES, SNES, GBA all run)
-22. Engrave serial number (if not done by CNC vendor) or apply numbered label
-23. QC checklist: display on, audio on, all buttons respond, USB-C charges, battery holds
-
-### Stage 6 — Pack & Number (Day 3, ~5 min per unit)
-24. Place in numbered kraft box (01/20 through 20/20)
-25. Include design lineage card (AI prompt → Vizcom render → physical device)
-26. Seal
+1. **1× Anbernic RG35XX H** — measure all internal dimensions with calipers → send to CNC vendor
+2. **1× CNC sample shell** (from PCBWay/Fictiv) — verify fit before full run
+3. On sample approval → order 19 more Anbernic units + 19 more shell sets
+4. **Lead time: ~3–4 weeks** (CNC is the long pole)
 
 ---
 
-## Software Setup (RetroPie)
+## Software (pre-loaded, nothing to do)
 
-```bash
-# Flash to microSD (run on each card)
-# Download: https://retropie.org.uk/download/
+Anbernic ships with RetroArch + EmulationStation. Optional upgrade:
+- [muOS](https://muos.dev) — cleaner UI, 5-min flash to microSD
+- [JELOS](https://jelos.org) — more features, community-supported
 
-# After first boot — configure display driver for ILI9341 SPI:
-# Add to /boot/config.txt:
-dtparam=spi=on
-dtoverlay=ili9341,speed=64000000,fps=30,bgr=1
-
-# Configure audio (I2S MAX98357A):
-dtoverlay=hifiberry-dac
-
-# GPIO button mapping via mk_arcadejoystick_rpi or RetroFlag GPIOnext
-# Map: BCM 17,27,22,23 = UP,DOWN,LEFT,RIGHT | 5,6 = A,B | 13,26 = START,SELECT
-```
+No coding. No config. Flash → play.
 
 ---
 
-## Risk Register
+## Budget vs Previous Plans
 
-| Risk | Likelihood | Mitigation |
-|------|------------|------------|
-| ILI9341 driver incompatibility with Pi Zero 2W + RetroPie | Low | Proven in 50+ DIY builds; fbcp-ili9341 driver well documented |
-| MT3608 voltage drift under load → Pi undervoltage | Medium | Set to 5.15V (headroom); add 100µF capacitor on output |
-| Battery too thick once in shell | Low | 803060 = 8mm thick; shell depth revised to 20mm |
-| CNC tolerances off on first sample | Medium | Order 1 sample unit before full 20-unit run |
-| Pi Zero 2W purchase limit (5/order on Amazon) | High | Order from 4 vendors: Adafruit, Pimoroni, CanaKit + Amazon |
+| Version | Approach | Total |
+|---------|----------|-------|
+| v1 | Custom PCB + CNC + sourcing everything | $4,224 |
+| v2 | Lean sourcing, still custom electronics | $2,174 |
+| v3 | Pi Zero 2W + individual components | $1,364 |
+| **v4 (current)** | **Anbernic shell swap — works out of box** | **$2,145** |
 
----
-
-## What Still Needs to Happen
-
-- [ ] Update Amazon cart: swap DPI display → ILI9341 SPI, add MT3608, MAX98357A, speaker, header, SD cards
-- [ ] Update CNC quote emails: revise shell dimensions to 125×75×20mm
-- [ ] Order 1 CNC shell sample before committing to full run
-- [ ] Lock GPIO header + PCB breakout design
-- [ ] Approve spend proposal → trigger manufacture step
+v4 costs slightly more than v3 but the assembly time drops from ~3 days of electronics work to a single 4-hour afternoon. The device is also better — larger display, bigger battery, more emulation power.

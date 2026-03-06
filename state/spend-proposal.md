@@ -1,50 +1,25 @@
-# Spend Proposal v3 — OBJECT 001 (20 units)
-_Revised: 2026-03-05T23:35:00Z — minimum viable version_
+# Spend Proposal v4 — OBJECT 001 (20 units)
+_Revised: 2026-03-06T01:56:18Z — Anbernic shell swap approach_
 
-## Key Cuts from v2
-- **Shell**: PCBWay → direct Aliexpress CNC shop (same spec, half the price)
-- **Compute**: RK3566 module ($400) → Raspberry Pi Zero 2W ($300) — runs RetroPie, proven retro gaming firmware, no custom BSP needed
-- **PCB**: Full PCBA ($240) → simple breakout board only ($50) — Pi Zero 2W handles everything via GPIO
-- **Display**: Switch to SPI variant, $8/unit vs $12
+## Philosophy
+Buy complete working handhelds. Swap into custom aluminum shells. Minimal assembly at door — one screwdriver, 10 min/unit.
 
----
+## Line Items
 
-## Line-Item Costs (×20 units)
-
-| Line Item | Vendor | ×20 Total |
-|-----------|--------|-----------|
-| CNC 6061-T6 shell + anodize | Aliexpress CNC | $400 |
-| Laser "XX/20" engraving | Aliexpress add-on | $40 |
-| Burgundy ABS buttons | Aliexpress | $40 |
-| Simple breakout PCB | JLCPCB | $50 |
-| Raspberry Pi Zero 2W | Aliexpress / Pi supplier | $300 |
-| 2.8" IPS display (SPI) | Aliexpress | $160 |
-| 3.7V 2500mAh LiPo + charger module | Aliexpress | $100 |
-| Misc hardware (screws, USB-C, lens) | Aliexpress | $60 |
-| Packaging (kraft box + numbered sticker) | Local | $30 |
+| Item | Source | ×20 Total |
+|------|--------|-----------|
+| Anbernic RG35XX H (complete working handheld) | Amazon / AliExpress | $1,100 |
+| CNC 6061-T6 shell + rear (brushed + anodized) | PCBWay / Fictiv / Xometry | $640 |
+| Laser engraving "OBJECT 001 — XX/20" | PCBWay add-on | $60 |
+| Burgundy button caps | Aliexpress | $40 |
+| M2 screws + packaging | Amazon / local | $50 |
 | Shipping | — | $60 |
-| Contingency (10%) | — | $124 |
-| **TOTAL** | | **$1,364** |
+| Contingency (10%) | — | $195 |
+| **TOTAL** | | **$2,145** |
 
----
+## Assembly
+4 screws per unit. No soldering. No wiring. No software setup.
+~4 hours total for all 20 units (2 people).
 
-## Budget Comparison
-
-| Version | Total | Savings vs Prior |
-|---------|-------|-----------------|
-| v1 (original) | $4,224 | — |
-| v2 (lean) | $2,174 | −$2,050 |
-| **v3 (minimum viable)** | **$1,364** | **−$810** |
-
-**$3,636 headroom vs $5K budget.**
-
-## What's Still Premium
-- Real CNC brushed aluminum shell — the design identity
-- Laser-engraved unit numbers
-- 20 individually numbered units
-
-## Trade-off
-Pi Zero 2W vs RK3566: handles NES/SNES/GBA/light PS1 perfectly. Not as fast for N64/PS1 heavy titles, but fine for a collector retro device.
-
-## Timeline
-~3–4 weeks (Pi Zero 2W ships fast, no tooling delays)
+## Budget
+$5,000 budget → $2,145 spend → **$2,855 headroom**
